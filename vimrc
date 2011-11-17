@@ -52,7 +52,8 @@ filetype on                     " enable filetype plugins
 filetype indent on
 filetype plugin on
 filetype plugin indent on
-set t_Co=256                    " use 256 terminal colors
+set t_Co=256
+" use 256 terminal colors
 set background=dark             " background color
 syntax on                       " syntax highlighting on
 "colorscheme wombat256
@@ -158,7 +159,7 @@ nnoremap / q/i
 nnoremap ? q?i
 
 " use 20 screen lines for command-line window
-set cmdwinheight=1
+set cmdwinheight=10
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Visual appearance
@@ -281,3 +282,7 @@ set makeprg=scons
 
 " Make shift-insert work like in Xterm
 nnoremap  <S-Insert> <MiddleMouse>
+
+" highlight nota bene annotation ([nN].?[bB].?) like TODO and FIXME
+" see :help match
+match Todo @\cN\.\?B\.\?@
