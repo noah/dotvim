@@ -52,24 +52,29 @@ filetype on                     " enable filetype plugins
 filetype indent on
 filetype plugin on
 filetype plugin indent on
-set t_Co=256
-" use 256 terminal colors
 set background=dark             " background color
 syntax on                       " syntax highlighting on
-"colorscheme wombat256
-"colorscheme beauty256
-" colorscheme jellybeans
-" colorscheme lettuce
-" colorscheme 256-jungle
-" colorscheme desert256
-" colorscheme gardener
-" colorscheme inkpot
-" colorscheme tir_black
-"colorscheme summerfruit256
-" colorscheme up
-" colorscheme vilight
-" colorscheme xoria256
-colorscheme fu
+
+colorscheme slate
+if has("gui_running") || &term == "rxvt-unicode-256color"
+  set t_Co=256
+  " use 256 terminal colors
+  "
+  "colorscheme wombat256
+  "colorscheme beauty256
+  " colorscheme jellybeans
+  " colorscheme lettuce
+  " colorscheme 256-jungle
+  " colorscheme desert256
+  " colorscheme gardener
+  " colorscheme inkpot
+  " colorscheme tir_black
+  "colorscheme summerfruit256
+  " colorscheme up
+  " colorscheme vilight
+  " colorscheme xoria256
+  colorscheme fu
+endif
 
 set showmatch             " show matching paren when bracked inserted
 
@@ -286,3 +291,6 @@ nnoremap  <S-Insert> <MiddleMouse>
 " highlight nota bene annotation ([nN].?[bB].?) like TODO and FIXME
 " see :help match
 match Todo @\cN\.\?B\.\?@
+
+" disable the welcome screen
+set shortmess+=I
