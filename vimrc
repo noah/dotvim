@@ -243,8 +243,9 @@ map <F12> :set number!<CR>
 " GPG Stuff
 let g:GPGUseAgent = 1
 
+""" gvim
 if has("gui_running")
-  set guifont=dina\ 10
+  set guifont=monaco\ 10
   set novb t_vb=          " neither bell nor vbell
   " fix Shift+Insert.  Note: these won't work with :set paste
   "noremap <S-Insert> "+gP
@@ -253,22 +254,6 @@ if has("gui_running")
   "colorscheme solarized
   " Make shift-insert work like in Xterm
   nnoremap  <S-Insert> <MiddleMouse>
-  "conqueterm
-  let g:ConqueTerm_PyVersion = 2
-  let g:ConqueTerm_FastMode = 0
-  let g:ConqueTerm_Color = 1
-  let g:ConqueTerm_SessionSupport = 0
-  let g:ConqueTerm_ReadUnfocused = 1
-  let g:ConqueTerm_InsertOnEnter = 0
-  let g:ConqueTerm_CloseOnEnd = 0
-  let g:ConqueTerm_StartMessages = 0
-  let g:ConqueTerm_ToggleKey = '<F8>'
-  let g:ConqueTerm_Syntax = 'conque'
-  let g:ConqueTerm_CWInsert = 1
-  let g:ConqueTerm_ExecFileKey = '<F11>'
-  let g:ConqueTerm_SendFileKey = '<F10>'
-  let g:ConqueTerm_SendVisKey = '<F9>'
-  let g:ConqueTerm_TERM = 'vt100'
 endif
 
 """ PYTHON
