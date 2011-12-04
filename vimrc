@@ -56,7 +56,22 @@ set background=dark             " background color
 syntax on                       " syntax highlighting on
 
 colorscheme slate
-if has("gui_running") || &term == "rxvt-unicode-256color"
+
+let gvim = has("gui_running")
+if gvim
+
+  set guifont=monaco\ 10
+  set novb t_vb=          " neither bell nor vbell
+  " fix Shift+Insert.  Note: these won't work with :set paste
+  "noremap <S-Insert> "+gP
+  "inoremap <S-Insert> <ESC>"+gP
+  "let g:solarized_termcolors=256
+  "colorscheme solarized
+  " Make shift-insert work like in Xterm
+  nnoremap  <S-Insert> <MiddleMouse>
+endif
+
+if &term == "rxvt-unicode-256color" || gvim
   set t_Co=256
   " use 256 terminal colors
   "
@@ -248,19 +263,6 @@ map <F12> :set number!<CR>
 " GPG Stuff
 let g:GPGUseAgent = 1
 
-""" gvim
-if has("gui_running")
-  set guifont=monaco\ 10
-  set novb t_vb=          " neither bell nor vbell
-  " fix Shift+Insert.  Note: these won't work with :set paste
-  "noremap <S-Insert> "+gP
-  "inoremap <S-Insert> <ESC>"+gP
-  "let g:solarized_termcolors=256
-  "colorscheme solarized
-  " Make shift-insert work like in Xterm
-  nnoremap  <S-Insert> <MiddleMouse>
-endif
-
 """ PYTHON
 let python_highlight_all = 1
 autocmd BufRead,BufNewFile *.py set tabstop=4 expandtab shiftwidth=4 softtabstop=4 
@@ -279,3 +281,4 @@ match Todo @\cN\.\?B\.\?@
 
 " disable the welcome screen
 set shortmess+=I
+  let g:GPGUseAgent = 1
