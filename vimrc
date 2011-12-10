@@ -71,7 +71,7 @@ if gvim
   nnoremap  <S-Insert> <MiddleMouse>
 endif
 
-if &term == "rxvt-unicode-256color" || gvim
+if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   set t_Co=256
   " use 256 terminal colors
   "
