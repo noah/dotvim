@@ -281,4 +281,17 @@ match Todo @\cN\.\?B\.\?@
 
 " disable the welcome screen
 set shortmess+=I
-  let g:GPGUseAgent = 1
+let g:GPGUseAgent = 1
+
+
+" Visual non-printing chars
+" set listchars=nbsp:·,eol:⏎,extends:>,precedes:<,tab:\|\ 
+" set list!
+
+
+" unicode...
+if &termencoding == ""
+  let &termencoding = &encoding
+endif
+set encoding=utf-8                     " better default than latin1
+setglobal fileencoding=utf-8           " change default file encoding when writing new files
