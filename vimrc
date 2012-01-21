@@ -269,6 +269,9 @@ autocmd BufRead,BufNewFile *.py set tabstop=4 expandtab shiftwidth=4 softtabstop
 
 autocmd BufRead,BufNewFile *.textile set tw=0 spell spelllang=en_us
 
+au BufRead,BufNewFile /etc/nginx/conf/* set ft=nginx 
+
+
 set makeprg=scons
 
 
