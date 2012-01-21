@@ -71,7 +71,7 @@ if gvim
   nnoremap  <S-Insert> <MiddleMouse>
 endif
 
-if &term == "rxvt-unicode-256color" || gvim
+if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   set t_Co=256
   " use 256 terminal colors
   "
@@ -284,4 +284,22 @@ match Todo @\cN\.\?B\.\?@
 
 " disable the welcome screen
 set shortmess+=I
-  let g:GPGUseAgent = 1
+let g:GPGUseAgent = 1
+
+
+" Visual non-printing chars
+" set listchars=nbsp:·,eol:⏎,extends:>,precedes:<,tab:\|\ 
+" set list!
+
+
+" unicode...
+if &termencoding == ""
+  let &termencoding = &encoding
+endif
+set encoding=utf-8                     " better default than latin1
+setglobal fileencoding=utf-8           " change default file encoding when writing new files
+
+
+" for tmux
+map <C-h> gT
+map <C-l> gt
