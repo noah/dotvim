@@ -158,7 +158,7 @@ nnoremap / q/i
 nnoremap ? q?i
 
 " use 20 screen lines for command-line window
-set cmdwinheight=1
+set cmdwinheight=10
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Visual appearance
@@ -277,6 +277,12 @@ autocmd BufRead,BufNewFile *.py set tabstop=4 expandtab shiftwidth=4 softtabstop
 autocmd BufRead,BufNewFile *.textile set tw=0 spell spelllang=en_us
 
 set makeprg=scons
+
+""" make ctrl+pg{up,dn} work in console vim
+set t_kN=[6;*~
+set t_kP=[5;*~
+
+set shortmess=I """ ditch vim intro screen
 
 
 " Make shift-insert work like in Xterm
