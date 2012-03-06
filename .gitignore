@@ -1,1 +1,7 @@
 bundle
+autoload
+bundle
+.netrwhist
+*.swp
+*.swo
+spell

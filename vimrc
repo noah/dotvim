@@ -52,23 +52,44 @@ filetype on                     " enable filetype plugins
 filetype indent on
 filetype plugin on
 filetype plugin indent on
-set t_Co=256                    " use 256 terminal colors
 set background=dark             " background color
 syntax on                       " syntax highlighting on
-"colorscheme wombat256
-"colorscheme beauty256
-" colorscheme jellybeans
-" colorscheme lettuce
-" colorscheme 256-jungle
-" colorscheme desert256
-" colorscheme gardener
-" colorscheme inkpot
-" colorscheme tir_black
-"colorscheme summerfruit256
-" colorscheme up
-" colorscheme vilight
-" colorscheme xoria256
-colorscheme fu
+
+colorscheme slate
+
+let gvim = has("gui_running")
+if gvim
+
+  set guifont=monaco\ 10
+  set novb t_vb=          " neither bell nor vbell
+  " fix Shift+Insert.  Note: these won't work with :set paste
+  "noremap <S-Insert> "+gP
+  "inoremap <S-Insert> <ESC>"+gP
+  "let g:solarized_termcolors=256
+  "colorscheme solarized
+  " Make shift-insert work like in Xterm
+  nnoremap  <S-Insert> <MiddleMouse>
+endif
+
+if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
+  set t_Co=256
+  " use 256 terminal colors
+  "
+  "colorscheme wombat256
+  "colorscheme beauty256
+  " colorscheme jellybeans
+  " colorscheme lettuce
+  " colorscheme 256-jungle
+  " colorscheme desert256
+  " colorscheme gardener
+  " colorscheme inkpot
+  " colorscheme tir_black
+  "colorscheme summerfruit256
+  " colorscheme up
+  " colorscheme vilight
+  " colorscheme xoria256
+  colorscheme fu
+endif
 
 set showmatch             " show matching paren when bracked inserted
 
@@ -242,39 +263,14 @@ map <F12> :set number!<CR>
 " GPG Stuff
 let g:GPGUseAgent = 1
 
-if has("gui_running")
-  set guifont=dina\ 10
-  set novb t_vb=          " neither bell nor vbell
-  " fix Shift+Insert.  Note: these won't work with :set paste
-  "noremap <S-Insert> "+gP
-  "inoremap <S-Insert> <ESC>"+gP
-  "let g:solarized_termcolors=256
-  "colorscheme solarized
-  " Make shift-insert work like in Xterm
-  nnoremap  <S-Insert> <MiddleMouse>
-  "conqueterm
-  let g:ConqueTerm_PyVersion = 2
-  let g:ConqueTerm_FastMode = 0
-  let g:ConqueTerm_Color = 1
-  let g:ConqueTerm_SessionSupport = 0
-  let g:ConqueTerm_ReadUnfocused = 1
-  let g:ConqueTerm_InsertOnEnter = 0
-  let g:ConqueTerm_CloseOnEnd = 0
-  let g:ConqueTerm_StartMessages = 0
-  let g:ConqueTerm_ToggleKey = '<F8>'
-  let g:ConqueTerm_Syntax = 'conque'
-  let g:ConqueTerm_CWInsert = 1
-  let g:ConqueTerm_ExecFileKey = '<F11>'
-  let g:ConqueTerm_SendFileKey = '<F10>'
-  let g:ConqueTerm_SendVisKey = '<F9>'
-  let g:ConqueTerm_TERM = 'vt100'
-endif
-
 """ PYTHON
 let python_highlight_all = 1
 autocmd BufRead,BufNewFile *.py set tabstop=4 expandtab shiftwidth=4 softtabstop=4 
 
 autocmd BufRead,BufNewFile *.textile set tw=0 spell spelllang=en_us
+
+au BufRead,BufNewFile /etc/nginx/conf/* set ft=nginx 
+
 
 set makeprg=scons
 
@@ -287,3 +283,29 @@ set shortmess=I """ ditch vim intro screen
 
 " Make shift-insert work like in Xterm
 nnoremap  <S-Insert> <MiddleMouse>
+
+" highlight nota bene annotation ([nN].?[bB].?) like TODO and FIXME
+" see :help match
+match Todo @\cN\.\?B\.\?@
+
+" disable the welcome screen
+set shortmess+=I
+let g:GPGUseAgent = 1
+
+
+" Visual non-printing chars
+" set listchars=nbsp:·,eol:⏎,extends:>,precedes:<,tab:\|\ 
+" set list!
+
+
+" unicode...
+if &termencoding == ""
+  let &termencoding = &encoding
+endif
+set encoding=utf-8                     " better default than latin1
+setglobal fileencoding=utf-8           " change default file encoding when writing new files
+
+
+" for tmux
+map <C-h> gT
+map <C-l> gt
