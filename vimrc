@@ -289,12 +289,17 @@ autocmd BufWritePost *.py call Flake8()
 "   whitespace around operators
 let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225"
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Language-specific settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd BufRead,BufNewFile *.textile set tw=0 spell spelllang=en_us
 autocmd BufRead,BufNewFile *.tex set spell spelllang=en_us ft=tex
+
+au BufRead,BufNewFile /etc/nginx/conf/* set ft=nginx 
+
+""" make ctrl+pg{up,dn} work in console vim
+set t_kN=[6;*~
+set t_kP=[5;*~
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
