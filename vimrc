@@ -10,7 +10,16 @@
 set nocompatible        " use vim defaults (not vi); required!
 filetype off            " required!
 
-" vundle manages vundle
+" install vundle if we don't have it already; it's a git submodule
+let missing_vundle=0
+if !isdirectory(expand("~/.vim/bundle/vundle/.git"))
+  echo "Installing vundle"
+  echo ""
+  !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+  let missing_vundle=1
+endif
+
+" load vundle
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
@@ -29,6 +38,15 @@ Bundle 'jpalardy/vim-slime'
 Bundle 'vim-scripts/makeprgs'
 Bundle 'tomtom/tlib_vim'
 
+
+if missing_vundle
+  echo "Updating bundles"
+  echo ""
+  :BundleInstall
+endif
+
+"Bundle 'Syntastic' "uber awesome syntax and errors highlighter
+"Bundle 'altercation/vim-colors-solarized' "T-H-E colorscheme
 
 filetype plugin indent on     " required! 
 
@@ -72,9 +90,12 @@ set statusline=%<\ %n:%f\ %m%r%y[%{&fo}]%=%-35.(L\ %l\ /\ %L;\ C\ %c%V\ (%P)%)
 if &termencoding == ""
   let &termencoding = &encoding
 endif
-set encoding=utf-8
-set fileencoding=utf-8
-setglobal fileencoding=utf-8
+
+if exists("g:modifiable") " can only change fileencoding if set modifiable
+  set encoding=utf-8
+  set fileencoding=utf-8
+  setglobal fileencoding=utf-8
+end
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Coding niceties
