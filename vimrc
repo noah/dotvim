@@ -316,7 +316,7 @@ autocmd WinEnter * call NERDTreeQuit()
 " Functions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                               AutoModeChange()
-function AutoModeChange()
+function! AutoModeChange()
   " Automatically set executable bit if file's first line contains #! and '/bin/'
   if getline(1) =~ "^#!"
     if getline(1) =~ "/bin/"
