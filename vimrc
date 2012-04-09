@@ -7,8 +7,13 @@
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" 
+let mapleader = ","
+let g:mapleader = ","
+
 set nocompatible        " use vim defaults (not vi); required!
 filetype off            " required!
+
 
 " install vundle if we don't have it already; it's a git submodule
 let missing_vundle=0
@@ -54,9 +59,6 @@ endif
 "Bundle 'altercation/vim-colors-solarized' "T-H-E colorscheme
 
 filetype plugin indent on     " required! 
-
-" 
-let mapleader = ","
 
 set novb t_vb=          " neither bell nor vbell
 set confirm             " ask for confirmation on overwrite, discard changes, etc
@@ -390,9 +392,17 @@ map <C-l> gt
 let g:slime_target = "tmux"
 " supertab
 let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTab_tab = 1
+"let g:SuperTab_tab = 1
+"let g:SuperTabMappingForward = '<Tab>'
+"let g:SuperTabMappingBackward = '<s-Tab>'
 
 
+" configure latex vim
+" see: http://vim-latex.sourceforge.net/documentation/latex-suite/customizing-what-to-fold.html
 let Tex_FoldedSections=""
 let Tex_FoldedEnvironments=""
 let Tex_FoldedMisc=""
+
+
+" Switch between the last two files
+nnoremap <leader><leader> <c-^>
