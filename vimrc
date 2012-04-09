@@ -24,19 +24,19 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " vundles
+Bundle 'garbas/vim-snipmate'
 Bundle 'gmarik/vundle'
+Bundle 'jpalardy/vim-slime'
+Bundle 'kien/ctrlp'
+Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'noah/vim256-color'
-Bundle 'vim-scripts/LaTeX-Suite-aka-Vim-LaTeX'
-Bundle 'vim-scripts/gnupg'
+Bundle 'tomtom/tlib_vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
-Bundle 'kien/ctrlp'
-Bundle 'garbas/vim-snipmate'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'jpalardy/vim-slime'
+Bundle 'vim-scripts/gnupg'
+Bundle 'vim-scripts/LaTeX-Suite-aka-Vim-LaTeX'
 Bundle 'vim-scripts/makeprgs'
-Bundle 'tomtom/tlib_vim'
 
 
 if missing_vundle
