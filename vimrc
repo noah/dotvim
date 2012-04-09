@@ -7,18 +7,26 @@
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+set nocompatible        " use vim defaults (not vi); !MUST BE FIRST LINE!
+
+" 
+let mapleader = ","
+
+
+" Load pathogen
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+
 " Load bundles
 call pathogen#infect()
 call pathogen#helptags()
 
-set nocompatible        " use vim defaults (not vi); !MUST BE FIRST LINE!
 set novb t_vb=          " neither bell nor vbell
 set confirm             " ask for confirmation on overwrite, discard changes, etc
 set mouse=a             " enable mouse in all modes
 set timeoutlen=0        " time to wait after ESC
 set history=400         " number of lines of Ex command history to save
 set hidden              " allow to change buffer w/o saving
-set shortmess+=I        " Disable the welcome screen
+set shortmess=atI       " Disable the welcome screen and other verbosity
 let g:GPGUseAgent = 1   " Use GPGAgent
 
 " statusline
@@ -52,6 +60,11 @@ endif
 set encoding=utf-8
 set fileencoding=utf-8
 setglobal fileencoding=utf-8
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Coding niceties
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+runtime macros/matchit.vim " intelligent matching of if/else blocks
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -325,4 +338,5 @@ match Todo @\cN\.B\.@
 map <C-h> gT
 map <C-l> gt
 
-let mapleader = ","
+" vim-slime
+let g:slime_target = "tmux"
