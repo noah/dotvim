@@ -27,7 +27,7 @@ call vundle#rc()
 Bundle 'garbas/vim-snipmate'
 Bundle 'gmarik/vundle'
 Bundle 'jpalardy/vim-slime'
-Bundle 'kien/ctrlp'
+Bundle 'kien/ctrlp.vim'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'noah/vim256-color'
 Bundle 'tomtom/tlib_vim'
@@ -35,8 +35,13 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 Bundle 'vim-scripts/gnupg'
-Bundle 'vim-scripts/LaTeX-Suite-aka-Vim-LaTeX'
+Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
 Bundle 'vim-scripts/makeprgs'
+Bundle 'Raimondi/delimitMate'
+Bundle 'Rykka/ColorV'
+Bundle 'mutewinter/vim-indent-guides'
+Bundle 'ervandew/supertab'
+Bundle 'nvie/vim-flake8'
 
 
 if missing_vundle
@@ -110,10 +115,9 @@ filetype on                     " enable filetype plugins
 filetype indent on
 filetype plugin on
 filetype plugin indent on
-set background=dark             " background color
 syntax on                       " syntax highlighting on
 
-colorscheme slate
+"colorscheme slate
 
 let gvim = has("gui_running")
 if gvim
@@ -128,6 +132,8 @@ if gvim
   " Make shift-insert work like in Xterm
   nnoremap  <S-Insert> <MiddleMouse>
 endif
+
+set background=dark             " background color
 
 if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   set t_Co=256
@@ -148,6 +154,7 @@ if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   " colorscheme xoria256
   colorscheme fu
 endif
+
 
 set showmatch             " show matching paren when bracked inserted
 
@@ -227,6 +234,11 @@ set completeopt=menu      " use popup menu to show completions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nofoldenable          " open all folds
 set foldmethod=manual     " manual, marker, syntax, try set foldcolumn=2
+set foldlevel=2
+
+" save fold state between sessions
+autocmd BufWinLeave *.* mkview!
+autocmd BufWinEnter *.* silent loadview
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Command line
@@ -376,3 +388,11 @@ map <C-l> gt
 
 " vim-slime
 let g:slime_target = "tmux"
+" supertab
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTab_tab = 1
+
+
+let Tex_FoldedSections=""
+let Tex_FoldedEnvironments=""
+let Tex_FoldedMisc=""
