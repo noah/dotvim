@@ -1,6 +1,6 @@
-autoload
-bundle
 .netrwhist
 *.swp
 *.swo
 spell
+bundle
+view

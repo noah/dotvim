@@ -1,6 +1,3 @@
-" This my vimrc has been collected from the vast reaches of the 'net.
-"
-"   See also: http://pinboard.in/u:noah
 "
 "   ``VIM is the greatest editor since the stone chisel.''
 "                                     
@@ -9,14 +6,69 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible        " use vim defaults (not vi); !MUST BE FIRST LINE!
+
+" 
+let mapleader = ","
+let g:mapleader = ","
+
+set nocompatible        " use vim defaults (not vi); required!
+filetype off            " required!
+
+
+" install vundle if we don't have it already; it's a git submodule
+let missing_vundle=0
+if !isdirectory(expand("~/.vim/bundle/vundle/.git"))
+  echo "Installing vundle"
+  echo ""
+  !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+  let missing_vundle=1
+endif
+
+" load vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" vundles
+Bundle 'garbas/vim-snipmate'
+Bundle 'gmarik/vundle'
+Bundle 'jpalardy/vim-slime'
+Bundle 'kien/ctrlp.vim'
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'noah/vim256-color'
+Bundle 'tomtom/tlib_vim'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-surround'
+Bundle 'vim-scripts/gnupg'
+Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
+Bundle 'vim-scripts/makeprgs'
+Bundle 'Raimondi/delimitMate'
+Bundle 'Rykka/ColorV'
+Bundle 'mutewinter/vim-indent-guides'
+Bundle 'ervandew/supertab'
+Bundle 'nvie/vim-flake8'
+
+
+if missing_vundle
+  echo "Updating bundles"
+  echo ""
+  :BundleInstall
+endif
+
+"Bundle 'Syntastic' "uber awesome syntax and errors highlighter
+"Bundle 'altercation/vim-colors-solarized' "T-H-E colorscheme
+
+filetype plugin indent on     " required! 
+
 set novb t_vb=          " neither bell nor vbell
 set confirm             " ask for confirmation on overwrite, discard changes, etc
 set mouse=a             " enable mouse in all modes
-set fileencoding=utf-8 
 set timeoutlen=0        " time to wait after ESC
 set history=400         " number of lines of Ex command history to save
 set hidden              " allow to change buffer w/o saving
+set shortmess=atI       " Disable the welcome screen and other verbosity
+let g:GPGUseAgent = 1   " Use GPGAgent
+
 " statusline
 " cf the default statusline: %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 " format markers:
@@ -39,11 +91,24 @@ set hidden              " allow to change buffer w/o saving
 set statusline=%<\ %n:%f\ %m%r%y[%{&fo}]%=%-35.(L\ %l\ /\ %L;\ C\ %c%V\ (%P)%)
 
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Encodings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if &termencoding == ""
+  let &termencoding = &encoding
+endif
 
-""" Pathogen
-""" http://www.vim.org/scripts/script.php?script_id=2332
+if exists("g:modifiable") " can only change fileencoding if set modifiable
+  set encoding=utf-8
+  set fileencoding=utf-8
+  setglobal fileencoding=utf-8
+end
 
-call pathogen#runtime_append_all_bundles() 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Coding niceties
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+runtime macros/matchit.vim " intelligent matching of if/else blocks
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Colors and syntax highlighting
@@ -52,10 +117,9 @@ filetype on                     " enable filetype plugins
 filetype indent on
 filetype plugin on
 filetype plugin indent on
-set background=dark             " background color
 syntax on                       " syntax highlighting on
 
-colorscheme slate
+"colorscheme slate
 
 let gvim = has("gui_running")
 if gvim
@@ -70,6 +134,8 @@ if gvim
   " Make shift-insert work like in Xterm
   nnoremap  <S-Insert> <MiddleMouse>
 endif
+
+set background=dark             " background color
 
 if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   set t_Co=256
@@ -90,6 +156,7 @@ if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   " colorscheme xoria256
   colorscheme fu
 endif
+
 
 set showmatch             " show matching paren when bracked inserted
 
@@ -117,7 +184,7 @@ if bufwinnr(1)
   map + <C-W>+
 endif
 
-" split windows correctly
+" split windows correctly/intuitively
 set splitbelow " split new vertical buffers beneath current buffer
 set splitright " split new horizontal buffers to the right of current buffer
 
@@ -169,6 +236,11 @@ set completeopt=menu      " use popup menu to show completions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nofoldenable          " open all folds
 set foldmethod=manual     " manual, marker, syntax, try set foldcolumn=2
+set foldlevel=2
+
+" save fold state between sessions
+autocmd BufWinLeave *.* mkview!
+autocmd BufWinEnter *.* silent loadview
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Command line
@@ -214,6 +286,7 @@ set tabstop=4
 "autocmd VimEnter * NERDTree
 "autocmd VimEnter * wincmd p
 
+" Close nerd tree automatically if last and only buffer
 function! NERDTreeQuit()
   redir => buffersoutput
   silent buffers
@@ -244,8 +317,7 @@ autocmd WinEnter * call NERDTreeQuit()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                               AutoModeChange()
 function AutoModeChange()
-  " Automatically give executable permissions if file begins with #!
-  " and contains '/bin/' in the path
+  " Automatically set executable bit if file's first line contains #! and '/bin/'
   if getline(1) =~ "^#!"
     if getline(1) =~ "/bin/"
       silent !chmod 755 %
@@ -263,45 +335,76 @@ map <F12> :set number!<CR>
 " GPG Stuff
 let g:GPGUseAgent = 1
 
-""" PYTHON
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Python-specific settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
 let python_highlight_all = 1
 autocmd BufRead,BufNewFile *.py set tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+autocmd BufWritePost *.py call Flake8()
+" vim-flake ignore warnings for
+"   spaces after (
+"   spaces before :
+"   spaces before operator
+"   multiple statements on one line (colon)
+"   multiple spaces after :
+"   line too long
+"   whitespace around operators
+let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225"
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Language-specific settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd BufRead,BufNewFile *.textile set tw=0 spell spelllang=en_us
+autocmd BufRead,BufNewFile *.tex set spell spelllang=en_us ft=tex
 
 autocmd BufRead,BufNewFile *.tex set ft=tex spell spelllang=en_us
 
 au BufRead,BufNewFile /etc/nginx/conf/* set ft=nginx 
 
+""" make ctrl+pg{up,dn} work in console vim
+set t_kN=[6;*~
+set t_kP=[5;*~
 
-set makeprg=scons
 
-
-" Make shift-insert work like in Xterm
-nnoremap  <S-Insert> <MiddleMouse>
-
-" highlight nota bene annotation ([nN].?[bB].?) like TODO and FIXME
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Highlighting
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" highlight nota bene annotation ([nN].[bB].) (n.b. N.B.) like TODO and FIXME
 " see :help match
-match Todo @\cN\.\?B\.\?@
-
-" disable the welcome screen
-set shortmess+=I
-let g:GPGUseAgent = 1
+match Todo @\cN\.B\.@
 
 
-" Visual non-printing chars
+" Visual display of non-printing chars
 " set listchars=nbsp:·,eol:⏎,extends:>,precedes:<,tab:\|\ 
 " set list!
 
 
-" unicode...
-if &termencoding == ""
-  let &termencoding = &encoding
-endif
-set encoding=utf-8                     " better default than latin1
-setglobal fileencoding=utf-8           " change default file encoding when writing new files
-
-
 " for tmux
+"map <C-h> gT
+"map <C-l> gt
+
+" TODO ctrl shift l/h should move a tab
+"nnoremap <C-Shift-l> 
+
 map <C-h> gT
 map <C-l> gt
+
+" vim-slime
+let g:slime_target = "tmux"
+" supertab
+let g:SuperTabDefaultCompletionType = "context"
+"let g:SuperTab_tab = 1
+"let g:SuperTabMappingForward = '<Tab>'
+"let g:SuperTabMappingBackward = '<s-Tab>'
+
+
+" configure latex vim
+" see: http://vim-latex.sourceforge.net/documentation/latex-suite/customizing-what-to-fold.html
+let Tex_FoldedSections=""
+let Tex_FoldedEnvironments=""
+let Tex_FoldedMisc=""
+
+
+" Switch between the last two files
+nnoremap <leader><leader> <c-^>
