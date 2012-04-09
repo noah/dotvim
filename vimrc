@@ -7,18 +7,33 @@
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set nocompatible        " use vim defaults (not vi); !MUST BE FIRST LINE!
+set nocompatible        " use vim defaults (not vi); required!
+filetype off            " required!
+
+" vundle manages vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" vundles
+Bundle 'gmarik/vundle'
+Bundle 'noah/vim256-color'
+Bundle 'vim-scripts/LaTeX-Suite-aka-Vim-LaTeX'
+Bundle 'vim-scripts/gnupg'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-surround'
+Bundle 'kien/ctrlp'
+Bundle 'garbas/vim-snipmate'
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'jpalardy/vim-slime'
+Bundle 'vim-scripts/makeprgs'
+Bundle 'tomtom/tlib_vim'
+
+
+filetype plugin indent on     " required! 
 
 " 
 let mapleader = ","
-
-
-" Load pathogen
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-
-" Load bundles
-call pathogen#infect()
-call pathogen#helptags()
 
 set novb t_vb=          " neither bell nor vbell
 set confirm             " ask for confirmation on overwrite, discard changes, etc
