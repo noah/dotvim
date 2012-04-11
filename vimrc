@@ -29,23 +29,33 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " vundles
+Bundle 'ervandew/supertab'
+Bundle 'vim-scripts/ScrollColors'
+Bundle 'baskerville/bubblegum'
 Bundle 'garbas/vim-snipmate'
 Bundle 'gmarik/vundle'
 Bundle 'jpalardy/vim-slime'
 Bundle 'kien/ctrlp.vim'
 Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'mutewinter/vim-indent-guides'
+Bundle 'nanotech/jellybeans.vim'
 Bundle 'noah/vim256-color'
+Bundle 'nvie/vim-flake8'
+Bundle 'Raimondi/delimitMate'
+Bundle 'Rykka/ColorV'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'scrooloose/nerdtree'
+Bundle 'sjl/badwolf'
+Bundle 'strange/strange.vim'
+Bundle 'timcharper/textile.vim'
 Bundle 'tomtom/tlib_vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
+Bundle 'vim-scripts/bclear'
 Bundle 'vim-scripts/gnupg'
 Bundle 'vim-scripts/makeprgs'
-Bundle 'Raimondi/delimitMate'
-Bundle 'Rykka/ColorV'
-Bundle 'mutewinter/vim-indent-guides'
-Bundle 'ervandew/supertab'
-Bundle 'nvie/vim-flake8'
+Bundle 'vim-scripts/taglist.vim'
 
 
 if missing_vundle
@@ -275,7 +285,8 @@ set autoindent
 " Number of spaces to use for autoindent (and >> <<)
 set shiftwidth=2
 " smart indenting for new lines
-set smartindent
+"N.B. smartindent breaks python indent ('#'-comments annoyingly unindented  may need to selectively enable for other languages)
+"set smartindent 
 " number of spaces that a tab counts for
 set tabstop=4
 
@@ -339,7 +350,8 @@ let g:GPGUseAgent = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 let python_highlight_all = 1
-autocmd BufRead,BufNewFile *.py set tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+autocmd BufRead,BufNewFile *.py set tabstop=4 expandtab shiftwidth=4 softtabstop=4
+au! FileType python setl nosmartindent
 autocmd BufWritePost *.py call Flake8()
 " vim-flake ignore warnings for
 "   spaces after (
@@ -356,6 +368,8 @@ let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd BufRead,BufNewFile *.textile set tw=0 spell spelllang=en_us
 autocmd BufRead,BufNewFile *.tex set spell spelllang=en_us ft=tex
+
+autocmd BufRead,BufNewFile *.tex set ft=tex spell spelllang=en_us
 
 au BufRead,BufNewFile /etc/nginx/conf/* set ft=nginx 
 
@@ -394,13 +408,6 @@ let g:SuperTabDefaultCompletionType = "context"
 "let g:SuperTab_tab = 1
 "let g:SuperTabMappingForward = '<Tab>'
 "let g:SuperTabMappingBackward = '<s-Tab>'
-
-
-" configure latex vim
-" see: http://vim-latex.sourceforge.net/documentation/latex-suite/customizing-what-to-fold.html
-let Tex_FoldedSections=""
-let Tex_FoldedEnvironments=""
-let Tex_FoldedMisc=""
 
 
 " Switch between the last two files
