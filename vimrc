@@ -7,8 +7,13 @@
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" 
+let mapleader = ","
+let g:mapleader = ","
+
 set nocompatible        " use vim defaults (not vi); required!
 filetype off            " required!
+
 
 " install vundle if we don't have it already; it's a git submodule
 let missing_vundle=0
@@ -24,28 +29,33 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " vundles
+Bundle 'ervandew/supertab'
+Bundle 'vim-scripts/ScrollColors'
+Bundle 'baskerville/bubblegum'
 Bundle 'garbas/vim-snipmate'
 Bundle 'gmarik/vundle'
 Bundle 'jpalardy/vim-slime'
 Bundle 'kien/ctrlp.vim'
 Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'mutewinter/vim-indent-guides'
 Bundle 'nanotech/jellybeans.vim'
 Bundle 'noah/vim256-color'
-Bundle 'Raimondi/delimitMate.vim'
+Bundle 'nvie/vim-flake8'
+Bundle 'Raimondi/delimitMate'
+Bundle 'Rykka/ColorV'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
+Bundle 'sjl/badwolf'
 Bundle 'strange/strange.vim'
+Bundle 'timcharper/textile.vim'
 Bundle 'tomtom/tlib_vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
+Bundle 'vim-scripts/bclear'
 Bundle 'vim-scripts/gnupg'
-Bundle 'vim-scripts/LaTeX-Suite-aka-Vim-LaTeX'
 Bundle 'vim-scripts/makeprgs'
 Bundle 'vim-scripts/taglist.vim'
-Bundle 'vim-scripts/bclear'
-Bundle 'sjl/badwolf'
-Bundle 'timcharper/textile.vim'
 
 
 if missing_vundle
@@ -58,9 +68,6 @@ endif
 "Bundle 'altercation/vim-colors-solarized' "T-H-E colorscheme
 
 filetype plugin indent on     " required! 
-
-" 
-let mapleader = ","
 
 set novb t_vb=          " neither bell nor vbell
 set confirm             " ask for confirmation on overwrite, discard changes, etc
@@ -119,10 +126,9 @@ filetype on                     " enable filetype plugins
 filetype indent on
 filetype plugin on
 filetype plugin indent on
-set background=dark             " background color
 syntax on                       " syntax highlighting on
 
-colorscheme slate
+"colorscheme slate
 
 let gvim = has("gui_running")
 if gvim
@@ -137,6 +143,8 @@ if gvim
   " Make shift-insert work like in Xterm
   nnoremap  <S-Insert> <MiddleMouse>
 endif
+
+set background=dark             " background color
 
 if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   set t_Co=256
@@ -157,6 +165,7 @@ if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   " colorscheme xoria256
   colorscheme fu
 endif
+
 
 set showmatch             " show matching paren when bracked inserted
 
@@ -236,6 +245,11 @@ set completeopt=menu      " use popup menu to show completions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nofoldenable          " open all folds
 set foldmethod=manual     " manual, marker, syntax, try set foldcolumn=2
+set foldlevel=2
+
+" save fold state between sessions
+autocmd BufWinLeave *.* mkview!
+autocmd BufWinEnter *.* silent loadview
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Command line
@@ -271,7 +285,8 @@ set autoindent
 " Number of spaces to use for autoindent (and >> <<)
 set shiftwidth=2
 " smart indenting for new lines
-set smartindent
+"N.B. smartindent breaks python indent ('#'-comments annoyingly unindented  may need to selectively enable for other languages)
+"set smartindent 
 " number of spaces that a tab counts for
 set tabstop=4
 
@@ -311,7 +326,7 @@ autocmd WinEnter * call NERDTreeQuit()
 " Functions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                               AutoModeChange()
-function AutoModeChange()
+function! AutoModeChange()
   " Automatically set executable bit if file's first line contains #! and '/bin/'
   if getline(1) =~ "^#!"
     if getline(1) =~ "/bin/"
@@ -335,7 +350,8 @@ let g:GPGUseAgent = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 let python_highlight_all = 1
-autocmd BufRead,BufNewFile *.py set tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+autocmd BufRead,BufNewFile *.py set tabstop=4 expandtab shiftwidth=4 softtabstop=4
+au! FileType python setl nosmartindent
 autocmd BufWritePost *.py call Flake8()
 " vim-flake ignore warnings for
 "   spaces after (
@@ -352,6 +368,8 @@ let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd BufRead,BufNewFile *.textile set tw=0 spell spelllang=en_us
 autocmd BufRead,BufNewFile *.tex set spell spelllang=en_us ft=tex
+
+autocmd BufRead,BufNewFile *.tex set ft=tex spell spelllang=en_us
 
 au BufRead,BufNewFile /etc/nginx/conf/* set ft=nginx 
 
@@ -385,3 +403,12 @@ map <C-l> gt
 
 " vim-slime
 let g:slime_target = "tmux"
+" supertab
+let g:SuperTabDefaultCompletionType = "context"
+"let g:SuperTab_tab = 1
+"let g:SuperTabMappingForward = '<Tab>'
+"let g:SuperTabMappingBackward = '<s-Tab>'
+
+
+" Switch between the last two files
+nnoremap <leader><leader> <c-^>
