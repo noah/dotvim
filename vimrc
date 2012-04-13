@@ -132,9 +132,10 @@ syntax on                       " syntax highlighting on
 
 let gvim = has("gui_running")
 if gvim
-
+  set linespace=1
   set guifont=monaco\ 10
   set novb t_vb=          " neither bell nor vbell
+  au GUIEnter * set t_vb= 
   " fix Shift+Insert.  Note: these won't work with :set paste
   "noremap <S-Insert> "+gP
   "inoremap <S-Insert> <ESC>"+gP
@@ -164,6 +165,25 @@ if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   " colorscheme vilight
   " colorscheme xoria256
   colorscheme fu
+
+  " toggle cursor color, modally
+  let &t_SI = "\<Esc>]12;#fe021d\x7"
+  let &t_EI = "\<Esc>]12;#00b4ff\x7"
+  let &t_SI .= "\<Esc>[4 q\x7"
+  let &t_EI .= "\<Esc>[2 q\x7"
+  "silent !echo -ne "\033]12;red\007"
+  " reset cursor when vim exits
+  autocmd VimLeave * silent !echo -ne "\033]112\007"
+  " use \003]12;gray\007 for gnome-terminal
+
+  "if &term =~ '^xterm'
+  "  " solid underscore
+  "  let &t_SI .= "\<Esc>[4 q"
+  "  " solid block
+  "  let &t_EI .= "\<Esc>[2 q"
+  "  " 1 or 0 -> blinking block
+  "  " 3 -> blinking underscore
+  "endif
 endif
 
 
@@ -412,3 +432,11 @@ let g:SuperTabDefaultCompletionType = "context"
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
+
+
+" notice file changes
+set autoread
+
+
+" backspace over stuff
+set backspace=indent,eol,start
