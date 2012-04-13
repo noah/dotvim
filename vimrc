@@ -53,7 +53,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 Bundle 'vim-scripts/bclear'
-Bundle 'vim-scripts/gnupg'
+Bundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
 Bundle 'vim-scripts/makeprgs'
 Bundle 'vim-scripts/taglist.vim'
 
@@ -76,7 +76,12 @@ set timeoutlen=0        " time to wait after ESC
 set history=400         " number of lines of Ex command history to save
 set hidden              " allow to change buffer w/o saving
 set shortmess=atI       " Disable the welcome screen and other verbosity
-let g:GPGUseAgent = 1   " Use GPGAgent
+
+""" GNUPG
+" GPG Stuff
+let g:GPGUseAgent = 1
+let g:GPGPreferArmor=1
+let g:GPGDefaultRecipients=["0x8A7BBF7BB3A949A853B668B0C3D7A4A522660FC3"]
 
 " statusline
 " cf the default statusline: %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
@@ -341,9 +346,6 @@ set cot+=menuone
 
 " toggle line numbers with F12
 map <F12> :set number!<CR>
-
-" GPG Stuff
-let g:GPGUseAgent = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Python-specific settings
