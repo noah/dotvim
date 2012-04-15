@@ -14,6 +14,14 @@ let g:mapleader = ","
 set nocompatible        " use vim defaults (not vi); required!
 filetype off            " required!
 
+"" set up consolidated swap, if necessary
+let swapdir="/tmp/vim_swap"
+if !isdirectory(expand(swapdir))
+  echo "Creating swap directory " . swapdir
+  call mkdir(swapdir)
+endif
+let &backupdir=swapdir
+let &directory=swapdir
 
 " install vundle if we don't have it already; it's a git submodule
 let missing_vundle=0
