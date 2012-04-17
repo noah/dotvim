@@ -42,7 +42,6 @@ Bundle 'nanotech/jellybeans.vim'
 Bundle 'noah/vim256-color'
 Bundle 'nvie/vim-flake8'
 Bundle 'Raimondi/delimitMate'
-Bundle 'Rykka/ColorV'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'sjl/badwolf'
@@ -81,7 +80,7 @@ set shortmess=atI       " Disable the welcome screen and other verbosity
 " GPG Stuff
 let g:GPGUseAgent = 1
 let g:GPGPreferArmor=1
-let g:GPGDefaultRecipients=["0x8A7BBF7BB3A949A853B668B0C3D7A4A522660FC3"]
+let g:GPGDefaultRecipients=["0x33CD92CD87D46D8F069FDA40276347CD175D5344", "0x8A7BBF7BB3A949A853B668B0C3D7A4A522660FC3", "0x4FE5CAF4A19B4005CE3199952D7A4956D6656D4B" ]
 
 " statusline
 " cf the default statusline: %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
