@@ -21,9 +21,9 @@ snippet log
 snippet sum
 	\sum_{${1}}^{${2}}${3}
 snippet bf
-	{\bf ${1}}
+	{\bf ${1}} ${2}
 snippet em
-	{\em ${1}}
+	{\em ${1}} ${2}
 snippet qquad
 	\qquad{${1}}
 snippet text
@@ -32,3 +32,24 @@ snippet verb
 	\begin{verbatim}
 		${1}
 	\end{verbatim}
+snippet it
+	\item ${1}
+snippet ge
+	\ge{} ${1}
+snippet le
+	\le{} ${1}
+snippet ld
+	\ldots{}${1}
+snippet nb
+	{\bf N.B.: ${1}}
+snippet defn
+	\defn{${1}}{${2}}
+snippet note
+	\note{${1}}
+snippet cases
+	\[
+	${1} =
+	\begin{cases}
+		${2} &\qquad{\text{if }}${3}\\
+	\end{cases}
+	\]

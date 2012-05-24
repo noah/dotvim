@@ -63,6 +63,7 @@ Bundle 'vim-scripts/bclear'
 Bundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
 Bundle 'vim-scripts/makeprgs'
 Bundle 'vim-scripts/taglist.vim'
+Bundle 'vimoutliner/vimoutliner'
 
 
 if missing_vundle
