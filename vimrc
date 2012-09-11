@@ -391,8 +391,11 @@ autocmd BufWritePost *.py call Flake8()
 "   multiple statements on one line (colon)
 "   multiple spaces after :
 "   line too long
+"   spaces before inline comment
+"   too many blank lines
+"   whitespace after ','
 "   whitespace around operators
-let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225"
+let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225,E261,E303,E231"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Language-specific settings
