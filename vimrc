@@ -259,7 +259,7 @@ set listchars+=precedes:<,extends:>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set incsearch             " highlight where the typed pattern matches
 set hlsearch              " highlight all searched-for phrases
-set ignorecase            " case ignored in search
+"set ignorecase            " case ignored in search
 set smartcase             " case ignored unless upper case used
 set magic                 " magic on
 
@@ -301,12 +301,13 @@ set cmdwinheight=10
 set number                " line numbers on
 set ruler                 " show cursor coords
 set vb t_vb=              " neither beep nor flash
-set scrolloff=3           " minimum number of lines above/below cursor (when scrolling)
+set scrolloff=20          " minimum number of lines above/below cursor (when scrolling)
 map <silent> <F14>   :let &number=1-&number<CR>
 set laststatus=2          " always show the status line
 set showcmd               " Show (partial) command in the last line of the screen.
 set title                 " window title
 set ttyfast               " improves smoothness
+set relativenumber        " relative line numbering
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Indentation, tab/space
@@ -446,6 +447,8 @@ nnoremap <leader><leader> <c-^>
 
 " notice file changes
 set autoread
+
+
 
 
 " backspace over stuff
