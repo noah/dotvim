@@ -10,8 +10,8 @@ To install this setup:
 % git clone git@github.com:noah/dotvim.git ~/.vim
 ```
 
-The first vim is run, vundle will be downloaded, as well as the list of
-plugins defined in `vimrc`.
+The first time vim is run, vundle will be downloaded, as well as the
+list of plugins defined in `vimrc`.
 
 To update *all* vim plugins, periodically run:
 
@@ -19,7 +19,7 @@ To update *all* vim plugins, periodically run:
 % vim +InstallBundles!
 ```
 
-This will launch an interactive installer; press 'l' while in
+This will launch an interactive installer; press `l` while in
 interactive mode to view the update log.
 
 Viewing bundles
