@@ -158,7 +158,8 @@ if gvim
   nnoremap  <S-Insert> <MiddleMouse>
 endif
 
-set background=dark             " background color
+"set background=dark             " background color
+set background=light
 
 if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   set t_Co=256
@@ -173,11 +174,12 @@ if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   " colorscheme gardener
   " colorscheme inkpot
   " colorscheme tir_black
-  "colorscheme summerfruit256
   " colorscheme up
   " colorscheme vilight
   " colorscheme xoria256
   colorscheme fu
+  "colorscheme summerfruit256
+  "colorscheme nkt256 
 
   " toggle cursor color, modally
   let &t_SI = "\<Esc>]12;#fe021d\x7"
@@ -277,8 +279,12 @@ set completeopt=menu      " use popup menu to show completions
 " Folding
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nofoldenable          " open all folds
-set foldmethod=manual     " manual, marker, syntax, try set foldcolumn=2
+set foldmethod=indent " manual, marker, syntax, try set foldcolumn=2
 set foldlevel=2
+set foldnestmax=2
+" fold bindings
+nnoremap <space> za
+vnoremap <space> zf
 
 " save fold state between sessions
 autocmd BufWinLeave *.* mkview!
@@ -394,7 +400,8 @@ autocmd BufWritePost *.py call Flake8()
 "   too many blank lines
 "   whitespace after ','
 "   whitespace around operators
-let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225,E261,E303,E231"
+"   indentation in continued lines
+let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225,E261,E303,E231,E128"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Language-specific settings
@@ -453,3 +460,5 @@ set autoread
 
 " backspace over stuff
 set backspace=indent,eol,start
+
+
