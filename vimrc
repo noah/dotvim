@@ -173,11 +173,11 @@ if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   " colorscheme gardener
   " colorscheme inkpot
   " colorscheme tir_black
-  "colorscheme summerfruit256
   " colorscheme up
   " colorscheme vilight
   " colorscheme xoria256
-  colorscheme fu
+  colorscheme summerfruit256
+  " colorscheme fu
 
   " toggle cursor color, modally
   let &t_SI = "\<Esc>]12;#fe021d\x7"
@@ -395,7 +395,8 @@ autocmd BufWritePost *.py call Flake8()
 "   too many blank lines
 "   whitespace after ','
 "   whitespace around operators
-let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225,E261,E303,E231"
+"   semicolon separating statements
+let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225,E261,E303,E231,E702"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Language-specific settings
@@ -456,3 +457,5 @@ set autoread
 
 " backspace over stuff
 set backspace=indent,eol,start
+
+set tabpagemax=200
