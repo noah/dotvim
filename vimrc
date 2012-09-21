@@ -403,7 +403,8 @@ autocmd BufWritePost *.py call Flake8()
 "   whitespace around operators
 "   semicolon separating statements
 "   indentation in continued lines
-let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225,E261,E303,E231,E128,E702"
+"   whitespace before ')'
+let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225,E261,E303,E231,E128,E702,E202"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Language-specific settings
