@@ -389,7 +389,8 @@ map <F12> :set number!<CR>
 let python_highlight_all = 1
 autocmd BufRead,BufNewFile *.py set tabstop=4 expandtab shiftwidth=4 softtabstop=4
 au! FileType python setl nosmartindent
-autocmd BufWritePost *.py call Flake8()
+autocmd FileType python map <buffer> <F8> :call Flake8()<CR>
+"autocmd BufWritePost *.py call Flake8()
 " vim-flake ignore warnings for
 "   spaces after (
 "   spaces before :
@@ -452,6 +453,12 @@ let g:SuperTabDefaultCompletionType = "context"
 "let g:SuperTabMappingForward = '<Tab>'
 "let g:SuperTabMappingBackward = '<s-Tab>'
 
+
+" Ctrl-p
+let g:ctrlp_prompt_mappings = {
+  \ 'AcceptSelection("e")': [],
+  \ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
+  \ }
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
