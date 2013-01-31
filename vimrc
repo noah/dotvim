@@ -64,6 +64,8 @@ Bundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
 Bundle 'vim-scripts/makeprgs'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'vimoutliner/vimoutliner'
+Bundle 'vim-scripts/xml.vim'
+Bundle 'vim-scripts/TWiki-Syntax'
 
 
 if missing_vundle
@@ -146,7 +148,7 @@ syntax on                       " syntax highlighting on
 let gvim = has("gui_running")
 if gvim
   set linespace=1
-  set guifont=monaco\ 10
+  set guifont=Monaco\ for\ Powerline\ 8
   set novb t_vb=          " neither bell nor vbell
   au GUIEnter * set t_vb= 
   " fix Shift+Insert.  Note: these won't work with :set paste
@@ -394,7 +396,8 @@ autocmd BufWritePost *.py call Flake8()
 "   too many blank lines
 "   whitespace after ','
 "   whitespace around operators
-let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225,E261,E303,E231"
+"   continuation line oveindent
+let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225,E261,E303,E231,E126,E122"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Language-specific settings
@@ -405,6 +408,8 @@ autocmd BufRead,BufNewFile *.tex set spell spelllang=en_us ft=tex
 autocmd BufRead,BufNewFile *.tex set ft=tex spell spelllang=en_us
 
 au BufRead,BufNewFile /etc/nginx/conf/* set ft=nginx 
+
+au FileType html,xml so ~/.vim/bundle/xml.vim/ftplugin/xml.vim
 
 """ make ctrl+pg{up,dn} work in console vim
 set t_kN=[6;*~
@@ -453,3 +458,8 @@ set autoread
 
 " backspace over stuff
 set backspace=indent,eol,start
+
+
+autocmd BufNewFile,BufReadPost mutt-* set textwidth=72 wrap spell spelllang=en_us
+autocmd BufRead mutt-* 1;/^$/+
+
