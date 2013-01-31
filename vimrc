@@ -160,7 +160,8 @@ if gvim
   nnoremap  <S-Insert> <MiddleMouse>
 endif
 
-set background=dark             " background color
+"set background=dark             " background color
+set background=light
 
 if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   set t_Co=256
@@ -175,11 +176,12 @@ if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   " colorscheme gardener
   " colorscheme inkpot
   " colorscheme tir_black
-  "colorscheme summerfruit256
   " colorscheme up
   " colorscheme vilight
   " colorscheme xoria256
   colorscheme fu
+  "colorscheme summerfruit256
+  "colorscheme nkt256 
 
   " toggle cursor color, modally
   let &t_SI = "\<Esc>]12;#fe021d\x7"
@@ -261,7 +263,7 @@ set listchars+=precedes:<,extends:>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set incsearch             " highlight where the typed pattern matches
 set hlsearch              " highlight all searched-for phrases
-set ignorecase            " case ignored in search
+"set ignorecase            " case ignored in search
 set smartcase             " case ignored unless upper case used
 set magic                 " magic on
 
@@ -279,8 +281,12 @@ set completeopt=menu      " use popup menu to show completions
 " Folding
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nofoldenable          " open all folds
-set foldmethod=manual     " manual, marker, syntax, try set foldcolumn=2
+set foldmethod=indent " manual, marker, syntax, try set foldcolumn=2
 set foldlevel=2
+set foldnestmax=2
+" fold bindings
+nnoremap <space> za
+vnoremap <space> zf
 
 " save fold state between sessions
 autocmd BufWinLeave *.* mkview!
@@ -303,12 +309,13 @@ set cmdwinheight=10
 set number                " line numbers on
 set ruler                 " show cursor coords
 set vb t_vb=              " neither beep nor flash
-set scrolloff=3           " minimum number of lines above/below cursor (when scrolling)
+set scrolloff=20          " minimum number of lines above/below cursor (when scrolling)
 map <silent> <F14>   :let &number=1-&number<CR>
 set laststatus=2          " always show the status line
 set showcmd               " Show (partial) command in the last line of the screen.
 set title                 " window title
 set ttyfast               " improves smoothness
+set relativenumber        " relative line numbering
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Indentation, tab/space
@@ -384,7 +391,8 @@ map <F12> :set number!<CR>
 let python_highlight_all = 1
 autocmd BufRead,BufNewFile *.py set tabstop=4 expandtab shiftwidth=4 softtabstop=4
 au! FileType python setl nosmartindent
-autocmd BufWritePost *.py call Flake8()
+autocmd FileType python map <buffer> <F8> :call Flake8()<CR>
+"autocmd BufWritePost *.py call Flake8()
 " vim-flake ignore warnings for
 "   spaces after (
 "   spaces before :
@@ -397,7 +405,10 @@ autocmd BufWritePost *.py call Flake8()
 "   whitespace after ','
 "   whitespace around operators
 "   continuation line oveindent
-let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225,E261,E303,E231,E126,E122"
+"   semicolon separating statements
+"   indentation in continued lines
+"   whitespace before ')'
+let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225,E261,E303,E231,E122,E126,E128,E702,E202"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Language-specific settings
@@ -448,6 +459,12 @@ let g:SuperTabDefaultCompletionType = "context"
 "let g:SuperTabMappingBackward = '<s-Tab>'
 
 
+" Ctrl-p
+let g:ctrlp_prompt_mappings = {
+  \ 'AcceptSelection("e")': [],
+  \ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
+  \ }
+
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 
@@ -456,10 +473,13 @@ nnoremap <leader><leader> <c-^>
 set autoread
 
 
+
+
 " backspace over stuff
 set backspace=indent,eol,start
 
-
 autocmd BufNewFile,BufReadPost mutt-* set textwidth=72 wrap spell spelllang=en_us
 autocmd BufRead mutt-* 1;/^$/+
-
+=======
+" vim -p glob argument limit
+set tabpagemax=200
