@@ -38,6 +38,7 @@ call vundle#rc()
 
 " vundles
 Bundle 'ervandew/supertab'
+Bundle 'Lokaltog/vim-powerline'
 Bundle 'vim-scripts/ScrollColors'
 Bundle 'baskerville/bubblegum'
 Bundle 'garbas/vim-snipmate'
@@ -480,6 +481,5 @@ set backspace=indent,eol,start
 
 autocmd BufNewFile,BufReadPost mutt-* set textwidth=72 wrap spell spelllang=en_us
 autocmd BufRead mutt-* 1;/^$/+
-=======
 " vim -p glob argument limit
 set tabpagemax=200
