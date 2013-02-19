@@ -49,7 +49,6 @@ Bundle 'mutewinter/vim-indent-guides'
 Bundle 'nanotech/jellybeans.vim'
 Bundle 'noah/vim256-color'
 Bundle 'nvie/vim-flake8'
-Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'sjl/badwolf'
@@ -64,6 +63,7 @@ Bundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
 Bundle 'vim-scripts/makeprgs'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'vimoutliner/vimoutliner'
+Bundle 'Lokaltog/vim-powerline'
 
 
 if missing_vundle
@@ -133,7 +133,7 @@ runtime macros/matchit.vim " intelligent matching of if/else blocks
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Colors and syntax highlighting
+" Fonts, colors and syntax highlighting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype on                     " enable filetype plugins
 filetype indent on
@@ -143,10 +143,12 @@ syntax on                       " syntax highlighting on
 
 "colorscheme slate
 
+let g:Powerline_symbols = "fancy"
+
 let gvim = has("gui_running")
 if gvim
   set linespace=1
-  set guifont=monaco\ 10
+  set guifont=Monaco\ for\ Powerline\ 10
   set novb t_vb=          " neither bell nor vbell
   au GUIEnter * set t_vb= 
   " fix Shift+Insert.  Note: these won't work with :set paste
