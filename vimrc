@@ -37,13 +37,13 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " vundles
+Bundle 'gmarik/vundle'
+Bundle 'jpalardy/vim-slime'
 Bundle 'ervandew/supertab'
-Bundle 'Lokaltog/vim-powerline'
+Bundle 'Lokaltog/powerline'
 Bundle 'vim-scripts/ScrollColors'
 Bundle 'baskerville/bubblegum'
 Bundle 'garbas/vim-snipmate'
-Bundle 'gmarik/vundle'
-Bundle 'jpalardy/vim-slime'
 Bundle 'kien/ctrlp.vim'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'mutewinter/vim-indent-guides'
@@ -52,7 +52,6 @@ Bundle 'noah/vim256-color'
 Bundle 'nvie/vim-flake8'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
-Bundle 'sjl/badwolf'
 Bundle 'strange/strange.vim'
 Bundle 'timcharper/textile.vim'
 Bundle 'tomtom/tlib_vim'
@@ -67,6 +66,12 @@ Bundle 'vimoutliner/vimoutliner'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'vim-scripts/xml.vim'
 Bundle 'vim-scripts/TWiki-Syntax'
+Bundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'davidhalter/jedi-vim'
+Bundle 'skammer/vim-css-color'
+Bundle 'Rip-Rip/clang_complete'
+"Bundle 'vim-scripts/fu'
 
 
 if missing_vundle
@@ -83,7 +88,6 @@ filetype plugin indent on     " required!
 set novb t_vb=          " neither bell nor vbell
 set confirm             " ask for confirmation on overwrite, discard changes, etc
 set mouse=a             " enable mouse in all modes
-set timeoutlen=0        " time to wait after ESC
 set history=400         " number of lines of Ex command history to save
 set hidden              " allow to change buffer w/o saving
 set shortmess=atI       " Disable the welcome screen and other verbosity
@@ -453,8 +457,17 @@ match Todo @\cN\.B\.@
 map <C-h> gT
 map <C-l> gt
 
-" vim-slime
+" vim-slime ...
 let g:slime_target = "tmux"
+let g:slime_paste_file = "/tmp/vim_swap/slime-paste-file"
+let g:slime_no_mappings = 1
+" real men use ipython
+let g:slime_python_ipython = 1
+
+xmap <leader>s <Plug>SlimeRegionSend
+nmap <leader>s <Plug>SlimeParagraphSend
+nmap <leader>t <Plug>SlimeConfig
+
 " supertab
 let g:SuperTabDefaultCompletionType = "context"
 "let g:SuperTab_tab = 1
@@ -485,3 +498,31 @@ autocmd BufNewFile,BufReadPost mutt-* set textwidth=72 wrap spell spelllang=en_u
 autocmd BufRead mutt-* 1;/^$/+
 " vim -p glob argument limit
 set tabpagemax=200
+
+
+
+" Show syntax highlighting groups for word under cursor
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+nmap <C-S-O> :call <SID>SynStack()<cr>
+
+
+" Ctrl+Shift+Page{Up,Down} reorders tabs (a la google-chrome)
+function <SID>MoveCurrentTab(value)
+  if a:value == 0
+    return
+  endif
+  let move = a:value - 1
+  let move_to = tabpagenr() + move
+  if move_to < 0
+    let move_to = 0
+  endif
+  exe 'tabmove '.move_to
+endfunction
+
+map <silent> <C-S-PageDown> :call <SID>MoveCurrentTab(1)<cr>
+map <silent> <C-S-PageUp> :call <SID>MoveCurrentTab(-1)<cr>
