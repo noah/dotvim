@@ -37,14 +37,14 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 
-
-
 " vundles
-Bundle 'Lokaltog/vim-powerline'
+Bundle 'Lokaltog/powerline'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'Raimondi/delimitMate'
-Bundle 'baskerville/bubblegum'
+Bundle 'Rip-Rip/clang_complete'
+Bundle 'Townk/vim-autoclose'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'davidhalter/jedi-vim'
 Bundle 'ervandew/supertab'
 Bundle 'garbas/vim-snipmate'
 Bundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
@@ -52,19 +52,17 @@ Bundle 'gmarik/vundle'
 Bundle 'godlygeek/tabular'
 Bundle 'jpalardy/vim-slime'
 Bundle 'kien/ctrlp.vim'
+Bundle 'majutsushi/tagbar'
 Bundle 'mutewinter/vim-indent-guides'
 Bundle 'noah/vim256-color'
 Bundle 'nvie/vim-flake8'
-Bundle 'skammer/vim-css-color'
-Bundle 'davidhalter/jedi-vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
-Bundle 'git://github.com:shougo/neocomplcache'
-Bundle 'strange/strange.vim'
+Bundle 'git://github.com/Shougo/neocomplcache.git'
+Bundle 'skammer/vim-css-color'
 Bundle 'timcharper/textile.vim'
 Bundle 'tomtom/tlib_vim'
-Bundle 'Townk/vim-autoclose'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
@@ -75,6 +73,7 @@ Bundle 'vim-scripts/makeprgs'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'vim-scripts/vimwiki'
 Bundle 'vim-scripts/xml.vim'
+Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'vimoutliner/vimoutliner'
 
 
@@ -92,7 +91,6 @@ filetype plugin indent on     " required!
 set novb t_vb=          " neither bell nor vbell
 set confirm             " ask for confirmation on overwrite, discard changes, etc
 set mouse=a             " enable mouse in all modes
-set timeoutlen=0        " time to wait after ESC
 set history=400         " number of lines of Ex command history to save
 set hidden              " allow to change buffer w/o saving
 set shortmess=atI       " Disable the welcome screen and other verbosity
@@ -145,7 +143,7 @@ runtime macros/matchit.vim " intelligent matching of if/else blocks
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Colors and syntax highlighting
+" Fonts, colors and syntax highlighting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype on                     " enable filetype plugins
 filetype indent on
@@ -154,6 +152,8 @@ filetype plugin indent on
 syntax on                       " syntax highlighting on
 
 "colorscheme slate
+
+let g:Powerline_symbols = "fancy"
 
 let gvim = has("gui_running")
 if gvim
@@ -460,8 +460,16 @@ match Todo @\cN\.B\.@
 map <C-h> gT
 map <C-l> gt
 
-" vim-slime
+" vim-slime ...
 let g:slime_target = "tmux"
+let g:slime_paste_file = "/tmp/vim_swap/slime-paste-file"
+let g:slime_no_mappings = 1
+" real men use ipython
+let g:slime_python_ipython = 1
+
+xmap <leader>s <Plug>SlimeRegionSend
+nmap <leader>s <Plug>SlimeParagraphSend
+nmap <leader>t <Plug>SlimeConfig
 
 " supertab
 let g:SuperTabDefaultCompletionType = "context"
@@ -498,3 +506,30 @@ autocmd BufRead mutt-* 1;/^$/+
 set tabpagemax=200
 
 let g:syntastic_python_flake8_post_args='--ignore=E501,E128,E225'
+
+
+" Show syntax highlighting groups for word under cursor
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+nmap <C-S-O> :call <SID>SynStack()<cr>
+
+
+" Ctrl+Shift+Page{Up,Down} reorders tabs (a la google-chrome)
+function <SID>MoveCurrentTab(value)
+  if a:value == 0
+    return
+  endif
+  let move = a:value - 1
+  let move_to = tabpagenr() + move
+  if move_to < 0
+    let move_to = 0
+  endif
+  exe 'tabmove '.move_to
+endfunction
+
+map <silent> <C-S-PageDown> :call <SID>MoveCurrentTab(1)<cr>
+map <silent> <C-S-PageUp> :call <SID>MoveCurrentTab(-1)<cr>
