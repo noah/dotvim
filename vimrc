@@ -36,42 +36,45 @@ endif
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+
 " vundles
-Bundle 'gmarik/vundle'
-Bundle 'jpalardy/vim-slime'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'davidhalter/jedi-vim'
 Bundle 'ervandew/supertab'
-Bundle 'Lokaltog/powerline'
-Bundle 'vim-scripts/ScrollColors'
-Bundle 'baskerville/bubblegum'
 Bundle 'garbas/vim-snipmate'
+Bundle 'git://github.com/Shougo/neocomplcache.git'
+Bundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
+Bundle 'gmarik/vundle'
+Bundle 'godlygeek/tabular'
+Bundle 'jpalardy/vim-slime'
 Bundle 'kien/ctrlp.vim'
+Bundle 'Lokaltog/powerline'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'majutsushi/tagbar'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'mutewinter/vim-indent-guides'
-Bundle 'nanotech/jellybeans.vim'
 Bundle 'noah/vim256-color'
 Bundle 'nvie/vim-flake8'
+Bundle 'Raimondi/delimitMate'
+Bundle 'Rip-Rip/clang_complete'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
-Bundle 'strange/strange.vim'
+Bundle 'scrooloose/syntastic'
+Bundle 'skammer/vim-css-color'
 Bundle 'timcharper/textile.vim'
 Bundle 'tomtom/tlib_vim'
+Bundle 'Townk/vim-autoclose'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
-Bundle 'vim-scripts/bclear'
-Bundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
-Bundle 'vim-scripts/makeprgs'
-Bundle 'vim-scripts/taglist.vim'
 Bundle 'vimoutliner/vimoutliner'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'vim-scripts/xml.vim'
+Bundle 'vim-scripts/bclear'
+Bundle 'vim-scripts/makeprgs'
+Bundle 'vim-scripts/ScrollColors'
+Bundle 'vim-scripts/taglist.vim'
 Bundle 'vim-scripts/TWiki-Syntax'
-Bundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'davidhalter/jedi-vim'
-Bundle 'skammer/vim-css-color'
-Bundle 'Rip-Rip/clang_complete'
-Bundle 'scrooloose/syntastic'
+Bundle 'vim-scripts/vimwiki'
+Bundle 'vim-scripts/xml.vim'
 
 
 if missing_vundle
@@ -482,6 +485,9 @@ nnoremap <leader><leader> <c-^>
 set autoread
 
 
+" fix movement in line-wrapped text
+nmap j gj
+nmap k gk
 
 
 " backspace over stuff
@@ -492,6 +498,7 @@ autocmd BufRead mutt-* 1;/^$/+
 " vim -p glob argument limit
 set tabpagemax=200
 
+let g:syntastic_python_flake8_post_args='--ignore=E501,E128,E225'
 
 
 " Show syntax highlighting groups for word under cursor
