@@ -71,7 +71,7 @@ Bundle 'airblade/vim-gitgutter'
 Bundle 'davidhalter/jedi-vim'
 Bundle 'skammer/vim-css-color'
 Bundle 'Rip-Rip/clang_complete'
-"Bundle 'vim-scripts/fu'
+Bundle 'scrooloose/syntastic'
 
 
 if missing_vundle
@@ -80,7 +80,6 @@ if missing_vundle
   :BundleInstall
 endif
 
-"Bundle 'Syntastic' "uber awesome syntax and errors highlighter
 "Bundle 'altercation/vim-colors-solarized' "T-H-E colorscheme
 
 filetype plugin indent on     " required! 
@@ -451,12 +450,6 @@ match Todo @\cN\.B\.@
 "map <C-h> gT
 "map <C-l> gt
 
-" TODO ctrl shift l/h should move a tab
-"nnoremap <C-Shift-l> 
-
-map <C-h> gT
-map <C-l> gt
-
 " vim-slime ...
 let g:slime_target = "tmux"
 let g:slime_paste_file = "/tmp/vim_swap/slime-paste-file"
@@ -511,6 +504,10 @@ endfunc
 nmap <C-S-O> :call <SID>SynStack()<cr>
 
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tabs
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
 " Ctrl+Shift+Page{Up,Down} reorders tabs (a la google-chrome)
 function <SID>MoveCurrentTab(value)
   if a:value == 0
@@ -523,6 +520,13 @@ function <SID>MoveCurrentTab(value)
   endif
   exe 'tabmove '.move_to
 endfunction
+"
+" tab movement, reordering
+noremap <C-S-PageDown> :call <SID>MoveCurrentTab(1)<cr>
+noremap <C-S-PageUp>   :call <SID>MoveCurrentTab(-1)<cr>
+noremap <C-h> gT
+noremap <C-l> gt
 
-map <silent> <C-S-PageDown> :call <SID>MoveCurrentTab(1)<cr>
-map <silent> <C-S-PageUp> :call <SID>MoveCurrentTab(-1)<cr>
+
+" don't page output
+set nomore
