@@ -15,7 +15,7 @@ set nocompatible        " use vim defaults (not vi); required!
 filetype off            " required!
 
 "" set up consolidated swap, if necessary
-let swapdir="/tmp/vim_swap"
+let swapdir="/tmp/vim_swap_" . $USER
 if !isdirectory(expand(swapdir))
   echo "Creating swap directory " . swapdir
   call mkdir(swapdir)
@@ -36,54 +36,14 @@ endif
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-
-" vundles
-Bundle 'airblade/vim-gitgutter'
-Bundle 'davidhalter/jedi-vim'
-Bundle 'ervandew/supertab'
-Bundle 'garbas/vim-snipmate'
-Bundle 'git://github.com/Shougo/neocomplcache.git'
-Bundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
-Bundle 'gmarik/vundle'
-Bundle 'godlygeek/tabular'
-Bundle 'jpalardy/vim-slime'
-Bundle 'kien/ctrlp.vim'
-Bundle 'Lokaltog/powerline'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'majutsushi/tagbar'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'mutewinter/vim-indent-guides'
-Bundle 'noah/vim256-color'
-Bundle 'nvie/vim-flake8'
-Bundle 'Raimondi/delimitMate'
-Bundle 'Rip-Rip/clang_complete'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'skammer/vim-css-color'
-Bundle 'timcharper/textile.vim'
-Bundle 'tomtom/tlib_vim'
-Bundle 'Townk/vim-autoclose'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-surround'
-Bundle 'vimoutliner/vimoutliner'
-Bundle 'vim-scripts/bclear'
-Bundle 'vim-scripts/makeprgs'
-Bundle 'vim-scripts/ScrollColors'
-Bundle 'vim-scripts/taglist.vim'
-Bundle 'vim-scripts/TWiki-Syntax'
-Bundle 'vim-scripts/vimwiki'
-Bundle 'vim-scripts/xml.vim'
-
+" load vundles
+source ~/.vim/vundles
 
 if missing_vundle
   echo "Updating bundles"
   echo ""
   :BundleInstall
 endif
-
-"Bundle 'altercation/vim-colors-solarized' "T-H-E colorscheme
 
 filetype plugin indent on     " required! 
 
@@ -315,7 +275,7 @@ set cmdwinheight=10
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Visual appearance
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set number                " line numbers on
+set nonu                  " line numbering
 set ruler                 " show cursor coords
 set vb t_vb=              " neither beep nor flash
 set scrolloff=20          " minimum number of lines above/below cursor (when scrolling)
@@ -324,7 +284,7 @@ set laststatus=2          " always show the status line
 set showcmd               " Show (partial) command in the last line of the screen.
 set title                 " window title
 set ttyfast               " improves smoothness
-set relativenumber        " relative line numbering
+"set relativenumber        " relative line numbering
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Indentation, tab/space
@@ -417,7 +377,7 @@ autocmd FileType python map <buffer> <F8> :call Flake8()<CR>
 "   semicolon separating statements
 "   indentation in continued lines
 "   whitespace before ')'
-let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225,E261,E303,E231,E122,E126,E128,E702,E202"
+let g:syntastic_python_flake8_post_args="--ignore=E201,E202,E203,E221,E701,E241,E501,E225,E261,E303,E231,E122,E126,E128,E702,E501,E128,E225"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Language-specific settings
@@ -497,8 +457,6 @@ autocmd BufNewFile,BufReadPost mutt-* set textwidth=72 wrap spell spelllang=en_u
 autocmd BufRead mutt-* 1;/^$/+
 " vim -p glob argument limit
 set tabpagemax=200
-
-let g:syntastic_python_flake8_post_args='--ignore=E501,E128,E225'
 
 
 " Show syntax highlighting groups for word under cursor
