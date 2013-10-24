@@ -15,7 +15,7 @@ set nocompatible        " use vim defaults (not vi); required!
 filetype off            " required!
 
 "" set up consolidated swap, if necessary
-let swapdir="/tmp/vim_swap"
+let swapdir="/tmp/vim_swap_" . $USER
 if !isdirectory(expand(swapdir))
   echo "Creating swap directory " . swapdir
   call mkdir(swapdir)
@@ -35,7 +35,6 @@ endif
 " load vundle
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
-
 
 " vundles
 Bundle 'airblade/vim-gitgutter'
@@ -81,14 +80,14 @@ Bundle 'vim-scripts/xml.vim'
 Bundle 'vim-scripts/vimwiki'
 Bundle 'vim-scripts/django.vim'
 
+" load vundles
+source ~/.vim/vundles
 
 if missing_vundle
   echo "Updating bundles"
   echo ""
   :BundleInstall
 endif
-
-"Bundle 'altercation/vim-colors-solarized' "T-H-E colorscheme
 
 syntax on
 filetype on
@@ -322,7 +321,7 @@ set cmdwinheight=10
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Visual appearance
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nonumber              " line numbers
+set nonu                  " line numbering
 set ruler                 " show cursor coords
 set vb t_vb=              " neither beep nor flash
 set scrolloff=20          " minimum number of lines above/below cursor (when scrolling)
@@ -411,9 +410,23 @@ autocmd FileType python map <buffer> <F8> :call Flake8()<CR>
 "autocmd BufRead *.py inoremap # X<c-h>#
 "
 au FileType ruby set expandtab softtabstop=2 tabstop=2 shiftwidth=2 autoindent
-
 au FileType html set ft=htmldjango.html
-
+" vim-flake ignore warnings for
+"   spaces after (
+"   spaces before :
+"   spaces before operator
+"   multiple statements on one line (colon)
+"   multiple spaces after :
+"   line too long
+"   spaces before inline comment
+"   too many blank lines
+"   whitespace after ','
+"   whitespace around operators
+"   continuation line oveindent
+"   semicolon separating statements
+"   indentation in continued lines
+"   whitespace before ')'
+let g:syntastic_python_flake8_post_args="--ignore=E201,E202,E203,E221,E701,E241,E501,E225,E261,E303,E231,E122,E126,E128,E702,E501,E128,E225"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Language-specific settings
@@ -511,7 +524,6 @@ let g:syntastic_python_checkers = ['flake8']
 "   indentation in continued lines
 "   whitespace before ')'
 let g:syntastic_python_flake8_post_args="--ignore=E201,E203,E221,E701,E241,E501,E225,E261,E303,E231,E122,E126,E128,E702,E202,E272,E271,E251,E302"
-
 
 " Show syntax highlighting groups for word under cursor
 function! <SID>SynStack()
