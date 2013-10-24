@@ -346,8 +346,6 @@ set autoindent
 set smartindent 
 " number of spaces that a tab counts for
 set tabstop=4
-" increase tab max
-set tabpagemax=1024
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " always open NERDTree explorer
@@ -400,6 +398,12 @@ set cot+=menuone
 
 " toggle line numbers with F12
 map <F12> :set number!<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tab settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" increase tab max
+set tabpagemax=1024
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Python-specific settings
@@ -507,7 +511,6 @@ set backspace=indent,eol,start
 autocmd BufNewFile,BufReadPost mutt-* set textwidth=72 wrap spell spelllang=en_us
 autocmd BufRead mutt-* 1;/^$/+
 " vim -p glob argument limit
-set tabpagemax=200
 
 let g:syntastic_python_checkers = ['flake8']
 "   spaces after (
@@ -576,5 +579,3 @@ let g:Powerline_symbols='fancy'
 "
 "command W w !sudo tee % > /dev/null
 cmap w!! w !sudo tee > /dev/null %
-
-
