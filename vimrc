@@ -346,6 +346,8 @@ set autoindent
 set smartindent 
 " number of spaces that a tab counts for
 set tabstop=4
+" increase tab max
+set tabpagemax=1024
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " always open NERDTree explorer
@@ -574,3 +576,5 @@ let g:Powerline_symbols='fancy'
 "
 "command W w !sudo tee % > /dev/null
 cmap w!! w !sudo tee > /dev/null %
+
+
