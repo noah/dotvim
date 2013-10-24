@@ -40,6 +40,8 @@ call vundle#rc()
 " vundles
 Bundle 'airblade/vim-gitgutter'
 Bundle 'davidhalter/jedi-vim'
+Bundle 'hynek/vim-python-pep8-indent'
+Bundle 'mileszs/ack.vim'
 Bundle 'ervandew/supertab'
 Bundle 'garbas/vim-snipmate'
 Bundle 'git://github.com/Shougo/neocomplcache.git'
@@ -48,33 +50,36 @@ Bundle 'gmarik/vundle'
 Bundle 'godlygeek/tabular'
 Bundle 'jpalardy/vim-slime'
 Bundle 'kien/ctrlp.vim'
-Bundle 'Lokaltog/powerline'
+Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'majutsushi/tagbar'
 Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'mutewinter/vim-indent-guides'
+"#Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'majutsushi/tagbar'
 Bundle 'noah/vim256-color'
 Bundle 'nvie/vim-flake8'
-Bundle 'Raimondi/delimitMate'
+"Bundle 'Raimondi/delimitMate'
 Bundle 'Rip-Rip/clang_complete'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
-Bundle 'skammer/vim-css-color'
+Bundle 'ap/vim-css-color'
+Bundle 'sjl/gundo.vim'
 Bundle 'timcharper/textile.vim'
 Bundle 'tomtom/tlib_vim'
-Bundle 'Townk/vim-autoclose'
-Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-characterize'
+Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 Bundle 'vimoutliner/vimoutliner'
 Bundle 'vim-scripts/bclear'
-Bundle 'vim-scripts/makeprgs'
+Bundle 'vim-ruby/vim-ruby'
 Bundle 'vim-scripts/ScrollColors'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'vim-scripts/TWiki-Syntax'
 Bundle 'vim-scripts/vimwiki'
 Bundle 'vim-scripts/xml.vim'
+Bundle 'vim-scripts/vimwiki'
+Bundle 'vim-scripts/django.vim'
 
 
 if missing_vundle
@@ -85,6 +90,8 @@ endif
 
 "Bundle 'altercation/vim-colors-solarized' "T-H-E colorscheme
 
+syntax on
+filetype on
 filetype plugin indent on     " required! 
 
 set novb t_vb=          " neither bell nor vbell
@@ -157,7 +164,7 @@ let g:Powerline_symbols = "fancy"
 let gvim = has("gui_running")
 if gvim
   set linespace=1
-  set guifont=Monaco\ for\ Powerline\ 8
+  set guifont=Monaco\ 12
   set novb t_vb=          " neither bell nor vbell
   au GUIEnter * set t_vb= 
   " fix Shift+Insert.  Note: these won't work with :set paste
@@ -298,8 +305,8 @@ nnoremap <space> za
 vnoremap <space> zf
 
 " save fold state between sessions
-autocmd BufWinLeave *.* mkview!
-autocmd BufWinEnter *.* silent loadview
+"autocmd BufWinLeave *.* mkview!
+"autocmd BufWinEnter *.* silent loadview
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Command line
@@ -315,7 +322,7 @@ set cmdwinheight=10
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Visual appearance
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set number                " line numbers on
+set nonumber              " line numbers
 set ruler                 " show cursor coords
 set vb t_vb=              " neither beep nor flash
 set scrolloff=20          " minimum number of lines above/below cursor (when scrolling)
@@ -324,7 +331,7 @@ set laststatus=2          " always show the status line
 set showcmd               " Show (partial) command in the last line of the screen.
 set title                 " window title
 set ttyfast               " improves smoothness
-set relativenumber        " relative line numbering
+"set relativenumber        " relative line numbering
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Indentation, tab/space
@@ -334,10 +341,10 @@ set expandtab
 " Copy indent from current line when starting a new line (via <CR> or "o")
 set autoindent
 " Number of spaces to use for autoindent (and >> <<)
-set shiftwidth=2
+"set shiftwidth=2
 " smart indenting for new lines
 "N.B. smartindent breaks python indent ('#'-comments annoyingly unindented  may need to selectively enable for other languages)
-"set smartindent 
+set smartindent 
 " number of spaces that a tab counts for
 set tabstop=4
 
@@ -398,26 +405,15 @@ map <F12> :set number!<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 let python_highlight_all = 1
-autocmd BufRead,BufNewFile *.py set tabstop=4 expandtab shiftwidth=4 softtabstop=4
-au! FileType python setl nosmartindent
+autocmd FileType python set ai tabstop=4 expandtab shiftwidth=4 softtabstop=4 textwidth=78
 autocmd FileType python map <buffer> <F8> :call Flake8()<CR>
 "autocmd BufWritePost *.py call Flake8()
-" vim-flake ignore warnings for
-"   spaces after (
-"   spaces before :
-"   spaces before operator
-"   multiple statements on one line (colon)
-"   multiple spaces after :
-"   line too long
-"   spaces before inline comment
-"   too many blank lines
-"   whitespace after ','
-"   whitespace around operators
-"   continuation line oveindent
-"   semicolon separating statements
-"   indentation in continued lines
-"   whitespace before ')'
-let g:flake8_ignore="E201,E203,E221,E701,E241,E501,E225,E261,E303,E231,E122,E126,E128,E702,E202"
+"autocmd BufRead *.py inoremap # X<c-h>#
+"
+au FileType ruby set expandtab softtabstop=2 tabstop=2 shiftwidth=2 autoindent
+
+au FileType html set ft=htmldjango.html
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Language-specific settings
@@ -498,7 +494,23 @@ autocmd BufRead mutt-* 1;/^$/+
 " vim -p glob argument limit
 set tabpagemax=200
 
-let g:syntastic_python_flake8_post_args='--ignore=E501,E128,E225'
+let g:syntastic_python_checkers = ['flake8']
+"   spaces after (
+"   spaces before :
+"   spaces before operator
+"   multiple statements on one line (colon)
+"   multiple spaces after :
+"   multiple spaces before keyword
+"   line too long
+"   spaces before inline comment
+"   too many blank lines
+"   whitespace after ','
+"   whitespace around operators
+"   continuation line oveindent
+"   semicolon separating statements
+"   indentation in continued lines
+"   whitespace before ')'
+let g:syntastic_python_flake8_post_args="--ignore=E201,E203,E221,E701,E241,E501,E225,E261,E303,E231,E122,E126,E128,E702,E202,E272,E271,E251,E302"
 
 
 " Show syntax highlighting groups for word under cursor
@@ -537,3 +549,16 @@ noremap <C-l> gt
 
 " don't page output
 set nomore
+
+
+autocmd FileType c :call tagbar#autoopen(1)
+
+set fileformats=unix
+
+let g:Powerline_symbols='fancy'
+
+
+" mapping for the sudo write trick
+"
+"command W w !sudo tee % > /dev/null
+cmap w!! w !sudo tee > /dev/null %
