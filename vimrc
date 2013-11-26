@@ -37,50 +37,6 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " vundles
-Bundle 'airblade/vim-gitgutter'
-Bundle 'davidhalter/jedi-vim'
-Bundle 'hynek/vim-python-pep8-indent'
-Bundle 'mileszs/ack.vim'
-Bundle 'ervandew/supertab'
-Bundle 'garbas/vim-snipmate'
-Bundle 'git://github.com/Shougo/neocomplcache.git'
-Bundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
-Bundle 'gmarik/vundle'
-Bundle 'godlygeek/tabular'
-Bundle 'jpalardy/vim-slime'
-Bundle 'kien/ctrlp.vim'
-Bundle 'kien/rainbow_parentheses.vim'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-"#Bundle 'nathanaelkane/vim-indent-guides'
-Bundle 'majutsushi/tagbar'
-Bundle 'noah/vim256-color'
-Bundle 'nvie/vim-flake8'
-"Bundle 'Raimondi/delimitMate'
-Bundle 'Rip-Rip/clang_complete'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'ap/vim-css-color'
-Bundle 'sjl/gundo.vim'
-Bundle 'timcharper/textile.vim'
-Bundle 'tomtom/tlib_vim'
-Bundle 'tpope/vim-characterize'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-surround'
-Bundle 'vimoutliner/vimoutliner'
-Bundle 'vim-scripts/bclear'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'vim-scripts/ScrollColors'
-Bundle 'vim-scripts/taglist.vim'
-Bundle 'vim-scripts/TWiki-Syntax'
-Bundle 'vim-scripts/vimwiki'
-Bundle 'vim-scripts/xml.vim'
-Bundle 'vim-scripts/vimwiki'
-Bundle 'vim-scripts/django.vim'
-
-" load vundles
 source ~/.vim/vundles
 
 if missing_vundle
@@ -577,5 +533,5 @@ let g:Powerline_symbols='fancy'
 
 " mapping for the sudo write trick
 "
-"command W w !sudo tee % > /dev/null
-cmap w!! w !sudo tee > /dev/null %
+command W w !sudo tee % > /dev/null
+cmap w!! w !sudo tee % > /dev/null
