@@ -23,31 +23,35 @@ endif
 let &backupdir=swapdir
 let &directory=swapdir
 
-" install vundle if we don't have it already; it's a git submodule
-let missing_vundle=0
-if !isdirectory(expand("~/.vim/bundle/vundle/.git"))
-  echo "Installing vundle"
+" install neobundle (and vimproc for asynchronicity) if we don't have it
+" already
+if !isdirectory(expand("~/.vim/bundle/neobundle.vim"))
+  echo "Installing neobundle && vimproc"
   echo ""
-  !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-  let missing_vundle=1
+  !git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+  set rtp+=~/.vim/bundle/neobundle.vim/
+  call neobundle#rc(expand('~/.vim/bundle/'))
+  NeoBundle 'Shougo/vimproc', {
+                          \ 'build' : {
+                          \     'unix'  : 'make -f make_unix.mak',
+                          \     'mac'   : 'make -f make_mac.mak'
+                          \     }
+                          \ }
+  NeoBundleInstall
 endif
 
-" load vundle
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/neobundle.vim/
+call neobundle#rc(expand('~/.vim/bundle/'))
 
-" vundles
-source ~/.vim/vundles
+" bundles
+source ~/.vim/bundles
 
-if missing_vundle
-  echo "Updating bundles"
-  echo ""
-  :BundleInstall
-endif
+filetype plugin indent on     " required! 
+
+NeoBundleCheck
 
 syntax on
 filetype on
-filetype plugin indent on     " required! 
 
 set novb t_vb=          " neither bell nor vbell
 set confirm             " ask for confirmation on overwrite, discard changes, etc
@@ -190,10 +194,11 @@ set whichwrap+=<,>,h,l    " allow cursor keys to wrap around columns
 " Buffers
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " easier switch between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+"map <C-j> <C-W>j
+"map <C-k> <C-W>k " can't remap C-K as it breaks things #FIXME
+"map <C-h> <C-W>h
+"map <C-l> <C-W>l
+"
 
 " grow/shrink horizontal split windows with plus/minus keys
 if bufwinnr(1)
