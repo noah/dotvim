@@ -23,29 +23,35 @@ endif
 let &backupdir=swapdir
 let &directory=swapdir
 
-" install vundle if we don't have it already; it's a git submodule
-let missing_vundle=0
-if !isdirectory(expand("~/.vim/bundle/vundle/.git"))
-  echo "Installing vundle"
+" install neobundle (and vimproc for asynchronicity) if we don't have it
+" already
+if !isdirectory(expand("~/.vim/bundle/neobundle.vim"))
+  echo "Installing neobundle && vimproc"
   echo ""
-  !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-  let missing_vundle=1
+  !git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+  set rtp+=~/.vim/bundle/neobundle.vim/
+  call neobundle#rc(expand('~/.vim/bundle/'))
+  NeoBundle 'Shougo/vimproc', {
+                          \ 'build' : {
+                          \     'unix'  : 'make -f make_unix.mak',
+                          \     'mac'   : 'make -f make_mac.mak'
+                          \     }
+                          \ }
+  NeoBundleInstall
 endif
 
-" load vundle
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/neobundle.vim/
+call neobundle#rc(expand('~/.vim/bundle/'))
 
-" load vundles
-source ~/.vim/vundles
-
-if missing_vundle
-  echo "Updating bundles"
-  echo ""
-  :BundleInstall
-endif
+" bundles
+source ~/.vim/bundles
 
 filetype plugin indent on     " required! 
+
+NeoBundleCheck
+
+syntax on
+filetype on
 
 set novb t_vb=          " neither bell nor vbell
 set confirm             " ask for confirmation on overwrite, discard changes, etc
@@ -61,7 +67,10 @@ let g:GPGPreferArmor=1
 let g:GPGDefaultRecipients=["0x33CD92CD87D46D8F069FDA40276347CD175D5344", "0x8A7BBF7BB3A949A853B668B0C3D7A4A522660FC3", "0x4FE5CAF4A19B4005CE3199952D7A4956D6656D4B" ]
 
 function! SyntaxItem()
-  return synIDattr(synID(line("."),col("."),1),"name")
+  return "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+        \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+        \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
+        " synIDattr(synID(line("."),col("."),1),"name")
 endfunction
 
 " statusline
@@ -122,6 +131,7 @@ let g:Powerline_symbols = "fancy"
 let gvim = has("gui_running")
 if gvim
   set linespace=1
+  set guifont=Monaco\ 12
   set novb t_vb=          " neither bell nor vbell
   au GUIEnter * set t_vb= 
   " fix Shift+Insert.  Note: these won't work with :set paste
@@ -191,6 +201,12 @@ set whichwrap+=<,>,h,l    " allow cursor keys to wrap around columns
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Buffers
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" easier switch between windows
+"map <C-j> <C-W>j
+"map <C-k> <C-W>k " can't remap C-K as it breaks things #FIXME
+"map <C-h> <C-W>h
+"map <C-l> <C-W>l
+"
 
 " grow/shrink horizontal split windows with plus/minus keys
 if bufwinnr(1)
@@ -257,8 +273,8 @@ nnoremap <space> za
 vnoremap <space> zf
 
 " save fold state between sessions
-autocmd BufWinLeave *.* mkview!
-autocmd BufWinEnter *.* silent loadview
+"autocmd BufWinLeave *.* mkview!
+"autocmd BufWinEnter *.* silent loadview
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Command line
@@ -293,10 +309,10 @@ set expandtab
 " Copy indent from current line when starting a new line (via <CR> or "o")
 set autoindent
 " Number of spaces to use for autoindent (and >> <<)
-set shiftwidth=2
+"set shiftwidth=2
 " smart indenting for new lines
 "N.B. smartindent breaks python indent ('#'-comments annoyingly unindented  may need to selectively enable for other languages)
-"set smartindent 
+set smartindent 
 " number of spaces that a tab counts for
 set tabstop=4
 
@@ -353,14 +369,23 @@ set cot+=menuone
 map <F12> :set number!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tab settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" increase tab max
+set tabpagemax=1024
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Python-specific settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 let python_highlight_all = 1
-autocmd BufRead,BufNewFile *.py set tabstop=4 expandtab shiftwidth=4 softtabstop=4
-au! FileType python setl nosmartindent
+autocmd FileType python set ai tabstop=4 expandtab shiftwidth=4 softtabstop=4 textwidth=78
 autocmd FileType python map <buffer> <F8> :call Flake8()<CR>
 "autocmd BufWritePost *.py call Flake8()
+"autocmd BufRead *.py inoremap # X<c-h>#
+"
+au FileType ruby set expandtab softtabstop=2 tabstop=2 shiftwidth=2 autoindent
+au FileType html set ft=htmldjango.html
 " vim-flake ignore warnings for
 "   spaces after (
 "   spaces before :
@@ -407,6 +432,7 @@ match Todo @\cN\.B\.@
 " set listchars=nbsp:·,eol:⏎,extends:>,precedes:<,tab:\|\ 
 " set list!
 
+imap <C-V> <Esc>"+gP<CR>i
 
 " for tmux
 "map <C-h> gT
@@ -455,8 +481,24 @@ set backspace=indent,eol,start
 autocmd BufNewFile,BufReadPost mutt-* set textwidth=72 wrap spell spelllang=en_us
 autocmd BufRead mutt-* 1;/^$/+
 " vim -p glob argument limit
-set tabpagemax=200
 
+let g:syntastic_python_checkers = ['flake8']
+"   spaces after (
+"   spaces before :
+"   spaces before operator
+"   multiple statements on one line (colon)
+"   multiple spaces after :
+"   multiple spaces before keyword
+"   line too long
+"   spaces before inline comment
+"   too many blank lines
+"   whitespace after ','
+"   whitespace around operators
+"   continuation line oveindent
+"   semicolon separating statements
+"   indentation in continued lines
+"   whitespace before ')'
+let g:syntastic_python_flake8_post_args="--ignore=E201,E203,E221,E701,E241,E501,E225,E261,E303,E231,E122,E126,E128,E702,E202,E272,E271,E251,E302"
 
 " Show syntax highlighting groups for word under cursor
 function! <SID>SynStack()
@@ -503,6 +545,23 @@ inoremap <S-Insert> <ESC>"+p`]a
 
 
 " automatically :set paste 
+
+autocmd FileType c :call tagbar#autoopen(1)
+
+set fileformats=unix
+
+let g:Powerline_symbols='fancy'
+
+
+" mapping for the sudo write trick
+"
+command W w !sudo tee % > /dev/null
+cmap w!! w !sudo tee % > /dev/null
+
+
+
+" Automatically set paste mode in Vim when pasting in insert mode  
+" see: https://coderwall.com/p/if9mda 
 
 function! WrapForTmux(s)
   if !exists('$TMUX')
