@@ -60,6 +60,10 @@ let g:GPGUseAgent = 1
 let g:GPGPreferArmor=1
 let g:GPGDefaultRecipients=["0x33CD92CD87D46D8F069FDA40276347CD175D5344", "0x8A7BBF7BB3A949A853B668B0C3D7A4A522660FC3", "0x4FE5CAF4A19B4005CE3199952D7A4956D6656D4B" ]
 
+function! SyntaxItem()
+  return synIDattr(synID(line("."),col("."),1),"name")
+endfunction
+
 " statusline
 " cf the default statusline: %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 " format markers:
@@ -80,6 +84,7 @@ let g:GPGDefaultRecipients=["0x33CD92CD87D46D8F069FDA40276347CD175D5344", "0x8A7
 "     markers)
 "   %) end of width specification
 set statusline=%<\ %n:%f\ %m%r%y[%{&fo}]%=%-35.(L\ %l\ /\ %L;\ C\ %c%V\ (%P)%)
+set statusline+=%{SyntaxItem()}
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -117,7 +122,6 @@ let g:Powerline_symbols = "fancy"
 let gvim = has("gui_running")
 if gvim
   set linespace=1
-  set guifont=Monaco\ for\ Powerline\ 8
   set novb t_vb=          " neither bell nor vbell
   au GUIEnter * set t_vb= 
   " fix Shift+Insert.  Note: these won't work with :set paste
@@ -138,7 +142,6 @@ if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   "
   "colorscheme wombat256
   "colorscheme beauty256
-  " colorscheme jellybeans
   " colorscheme lettuce
   " colorscheme 256-jungle
   " colorscheme desert256
@@ -149,6 +152,7 @@ if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   " colorscheme vilight
   " colorscheme xoria256
   colorscheme fu
+  "colorscheme jellybeans
   "colorscheme summerfruit256
   "colorscheme nkt256 
 
@@ -187,11 +191,6 @@ set whichwrap+=<,>,h,l    " allow cursor keys to wrap around columns
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Buffers
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" easier switch between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
 
 " grow/shrink horizontal split windows with plus/minus keys
 if bufwinnr(1)
@@ -495,3 +494,36 @@ noremap <C-l> gt
 
 " don't page output
 set nomore
+
+set popt=paper:letter,duplex:off,portrait:n
+"set popt=paper:letter,duplex:off,portrait:y
+"
+"
+inoremap <S-Insert> <ESC>"+p`]a
+
+
+" automatically :set paste 
+
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+    return a:s
+  endif
+
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
+
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
+
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+set clipboard=unnamed
