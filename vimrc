@@ -66,6 +66,13 @@ let g:GPGUseAgent = 1
 let g:GPGPreferArmor=1
 let g:GPGDefaultRecipients=["0x33CD92CD87D46D8F069FDA40276347CD175D5344", "0x8A7BBF7BB3A949A853B668B0C3D7A4A522660FC3", "0x4FE5CAF4A19B4005CE3199952D7A4956D6656D4B" ]
 
+function! SyntaxItem()
+  return "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+        \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+        \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
+        " synIDattr(synID(line("."),col("."),1),"name")
+endfunction
+
 " statusline
 " cf the default statusline: %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 " format markers:
@@ -86,6 +93,7 @@ let g:GPGDefaultRecipients=["0x33CD92CD87D46D8F069FDA40276347CD175D5344", "0x8A7
 "     markers)
 "   %) end of width specification
 set statusline=%<\ %n:%f\ %m%r%y[%{&fo}]%=%-35.(L\ %l\ /\ %L;\ C\ %c%V\ (%P)%)
+set statusline+=%{SyntaxItem()}
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -144,7 +152,6 @@ if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   "
   "colorscheme wombat256
   "colorscheme beauty256
-  " colorscheme jellybeans
   " colorscheme lettuce
   " colorscheme 256-jungle
   " colorscheme desert256
@@ -155,6 +162,7 @@ if &term == "rxvt-unicode-256color" || &term == "screen-256color" || gvim
   " colorscheme vilight
   " colorscheme xoria256
   colorscheme fu
+  "colorscheme jellybeans
   "colorscheme summerfruit256
   "colorscheme nkt256 
 
@@ -429,6 +437,7 @@ match Todo @\cN\.B\.@
 " set listchars=nbsp:·,eol:⏎,extends:>,precedes:<,tab:\|\ 
 " set list!
 
+imap <C-V> <Esc>"+gP<CR>i
 
 " for tmux
 "map <C-h> gT
@@ -533,6 +542,14 @@ noremap <C-l> gt
 " don't page output
 set nomore
 
+set popt=paper:letter,duplex:off,portrait:n
+"set popt=paper:letter,duplex:off,portrait:y
+"
+"
+inoremap <S-Insert> <ESC>"+p`]a
+
+
+" automatically :set paste 
 
 autocmd FileType c :call tagbar#autoopen(1)
 
@@ -545,3 +562,32 @@ let g:Powerline_symbols='fancy'
 "
 command W w !sudo tee % > /dev/null
 cmap w!! w !sudo tee % > /dev/null
+
+
+
+" Automatically set paste mode in Vim when pasting in insert mode  
+" see: https://coderwall.com/p/if9mda 
+
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+    return a:s
+  endif
+
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
+
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
+
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+set clipboard=unnamed
