@@ -285,13 +285,18 @@ set cmdwinheight=10
 set nonu                  " line numbering
 set ruler                 " show cursor coords
 set vb t_vb=              " neither beep nor flash
-set scrolloff=20          " minimum number of lines above/below cursor (when scrolling)
 map <silent> <F14>   :let &number=1-&number<CR>
 set laststatus=2          " always show the status line
 set showcmd               " Show (partial) command in the last line of the screen.
 set title                 " window title
 set ttyfast               " improves smoothness
 "set relativenumber        " relative line numbering
+
+" G moves cursor to last line, scrolls to top of window (inserting
+" context beneath) and shows scrolloff lines of context
+" without zt will move cursor to last line at bottom of window
+noremap G Gzt
+set scrolloff=20          " minimum number of lines above/below cursor (when scrolling)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Indentation, tab/space

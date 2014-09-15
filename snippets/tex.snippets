@@ -1,8 +1,24 @@
-# Enumerate
 snippet enu
 	\begin{enumerate}
 		\item ${1}
 	\end{enumerate}
+snippet itemize
+	\begin{itemize}
+		\item ${1}
+	\end{itemize}
+snippet desc
+	\begin{description}
+		\item[${1}] ${2}
+		${3}
+	\end{description}
+snippet cent
+	\begin{center}
+		${1}
+	\end{center}
+snippet eqn
+	\begin{equation}
+		${1}
+	\end{equation}
 snippet code
 	\begin{code}
 	procedure ${1} (${2})
@@ -32,12 +48,6 @@ snippet verb
 	\begin{verbatim}
 		${1}
 	\end{verbatim}
-snippet sec
-	\section{${1}}
-	${2}
-snippet subsec
-	\subsection{${1}}
-	${2}
 snippet it
 	\item ${1}
 snippet ge
@@ -59,3 +69,44 @@ snippet cases
 		${2} &\qquad{\text{if }}${3}\\
 	\end{cases}
 	\]
+snippet med
+	\medskip
+	${1}
+snippet table
+	\begin{table}[H]
+	\centering
+	\begin{tabular}{l|r}
+	c1 			& c2\\
+	\hline
+	d1 			& d2\\
+	\end{tabular}
+	\caption{${1}}
+	\end{table}
+
+# writing envs
+snippet cha
+	\chapter{${1}}
+snippet sec
+	\section{${1}}
+snippet sub
+	\subsection{${1}}
+snippet subsub
+	\subsubsection{${1}}
+
+# chemistry
+snippet ch
+	\ch{${1}}${2}
+snippet chlewis
+	\chlewis{0.}{X${1}}
+snippet el
+	\el{}
+snippet ng
+	noble gas
+snippet cb
+	covalent bond
+snippet mc
+	molecule
+snippet pch
+	\pch[${1}]
+snippet mch
+	\mch[${1}]
