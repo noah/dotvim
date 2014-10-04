@@ -62,6 +62,12 @@ snippet nb
 	{\bf N.B.: ${1}}
 snippet defn
 	\defn{${1}}{${2}}
+snippet qa
+	\qa{
+		${1}
+	}{
+		${2}
+	}
 snippet note
 	\note{${1}}
 snippet cases
@@ -76,12 +82,14 @@ snippet med
 	${1}
 snippet table
 	\begin{table}[H]
+	\noindent\resizebox{\linewidth}{!}{%        
 	\centering
 	\begin{tabular}{l|r}
 	c1 			& c2\\
 	\hline
 	d1 			& d2\\
 	\end{tabular}
+	}
 	\caption{${1}}
 	\end{table}
 
@@ -97,7 +105,9 @@ snippet subsub
 
 # chemistry
 snippet ch
-	\ch{${1}}${2}
+	\[\ch{
+		${1}
+	}\]
 snippet chlewis
 	\chlewis{0.}{X${1}}
 snippet el
