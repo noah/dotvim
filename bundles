@@ -45,8 +45,8 @@ NeoBundle 'rkitover/vimpager'
 NeoBundle 'evanmiller/nginx-vim-syntax'
 NeoBundle 'wookiehangover/jshint.vim'
 NeoBundle 'git@github.com:elzr/vim-json.git'
-
-"NeoBundle 'bling/vim-airline'
+NeoBundle 'bling/vim-bufferline'
+NeoBundle 'bling/vim-airline'
 
 
 " vim: set ft=vim:

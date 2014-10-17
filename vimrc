@@ -549,8 +549,6 @@ set popt=paper:letter,duplex:off,portrait:n
 inoremap <S-Insert> <ESC>"+p`]a
 
 
-" automatically :set paste 
-
 autocmd FileType c :call tagbar#autoopen(1)
 
 set fileformats=unix
@@ -568,26 +566,30 @@ cmap w!! w !sudo tee % > /dev/null
 " Automatically set paste mode in Vim when pasting in insert mode  
 " see: https://coderwall.com/p/if9mda 
 
-function! WrapForTmux(s)
-  if !exists('$TMUX')
-    return a:s
-  endif
+" function! WrapForTmux(s)
+"   if !exists('$TMUX')
+"     return a:s
+"   endif
+" 
+"   let tmux_start = "\<Esc>Ptmux;"
+"   let tmux_end = "\<Esc>\\"
+" 
+"   return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+" endfunction
+" 
+" let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+" let &t_EI .= WrapForTmux("\<Esc>[?2004l")
 
-  let tmux_start = "\<Esc>Ptmux;"
-  let tmux_end = "\<Esc>\\"
-
-  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
-endfunction
-
-let &t_SI .= WrapForTmux("\<Esc>[?2004h")
-let &t_EI .= WrapForTmux("\<Esc>[?2004l")
-
-function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
-endfunction
-
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+" function! XTermPasteBegin()
+"   set pastetoggle=<Esc>[201~
+"   set paste
+"   return ""
+" endfunction
+" 
+" inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
 set clipboard=unnamed
+
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 0
