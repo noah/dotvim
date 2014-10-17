@@ -1,4 +1,3 @@
-"
 "   ``VIM is the greatest editor since the stone chisel.''
 "                                     
 "                               - Jose Unpingco
@@ -436,8 +435,6 @@ match Todo @\cN\.B\.@
 " Visual display of non-printing chars
 " set listchars=nbsp:·,eol:⏎,extends:>,precedes:<,tab:\|\ 
 " set list!
-
-imap <C-V> <Esc>"+gP<CR>i
 
 " for tmux
 "map <C-h> gT
