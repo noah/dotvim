@@ -29,18 +29,22 @@ if !isdirectory(expand("~/.vim/bundle/neobundle.vim"))
   echo ""
   !git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
   set rtp+=~/.vim/bundle/neobundle.vim/
-  call neobundle#rc(expand('~/.vim/bundle/'))
+  call neobundle#begin(expand('~/.vim/bundle/'))
   NeoBundle 'Shougo/vimproc', {
                           \ 'build' : {
                           \     'unix'  : 'make -f make_unix.mak',
                           \     'mac'   : 'make -f make_mac.mak'
                           \     }
                           \ }
+  NeoBundleFetch 'Shougo/neobundle.vim'
   NeoBundleInstall
+  call neobundle#end()
 endif
 
 set rtp+=~/.vim/bundle/neobundle.vim/
-call neobundle#rc(expand('~/.vim/bundle/'))
+call neobundle#begin(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+call neobundle#end()
 
 " bundles
 source ~/.vim/bundles
