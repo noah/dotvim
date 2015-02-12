@@ -411,6 +411,10 @@ au FileType html set ft=htmldjango.html
 "   whitespace before ')'
 let g:syntastic_python_flake8_post_args="--ignore=E201,E202,E203,E221,E701,E241,E501,E225,E261,E303,E231,E122,E126,E128,E702,E501,E128,E225"
 
+" necessary so syntastic will still work even without a python2 shebang
+let g:syntastic_python_python_exec = g:syntastic_python2_python_exe
+let g:syntastic_python_checkers = g:syntastic_python2_checkers
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Language-specific settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
