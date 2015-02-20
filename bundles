@@ -3,7 +3,6 @@ NeoBundle 'ap/vim-css-color'
 "NeoBundle 'davidhalter/jedi-vim'
 NeoBundle 'ervandew/supertab'
 NeoBundle 'garbas/vim-snipmate'
-NeoBundle 'Shougo/neocomplcache.git'
 NeoBundle 'Shougo/vimproc.git'
 NeoBundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
 NeoBundle 'godlygeek/tabular'
@@ -47,6 +46,10 @@ NeoBundle 'evanmiller/nginx-vim-syntax'
 NeoBundle 'elzr/vim-json.git'
 NeoBundle 'bling/vim-bufferline'
 NeoBundle 'bling/vim-airline'
+NeoBundle 'Shougo/neocomplete'
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundle 'honza/vim-snippets'
 
 
 " vim: set ft=vim:
