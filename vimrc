@@ -47,11 +47,15 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 call neobundle#end()
 
 " bundles
+call neobundle#append()
 source ~/.vim/bundles
+call neobundle#end()
 
 filetype plugin indent on     " required! 
 
+call neobundle#append()
 NeoBundleCheck
+call neobundle#end()
 
 syntax on
 filetype on
