@@ -526,11 +526,9 @@ let g:syntastic_python_flake8_post_args="--ignore=E201,E202,E203,E221,E701,E241,
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd BufRead,BufNewFile *.textile set tw=0 spell spelllang=en_us
 autocmd BufRead,BufNewFile *.tex set spell spelllang=en_us ft=tex
-
-autocmd BufRead,BufNewFile *.tex set ft=tex spell spelllang=en_us
+let g:tex_flavor = "latex"
 
 au BufRead,BufNewFile /etc/nginx/conf/* set ft=nginx 
-
 au FileType html,xml so ~/.vim/bundle/xml.vim/ftplugin/xml.vim
 
 """ make ctrl+pg{up,dn} work in console vim
@@ -704,3 +702,18 @@ set clipboard=unnamed
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 0
+
+
+
+" wrap bulleted text ( '*' or '-')
+set comments=fb:-,fb:*
+
+noremap <F5>          :make!<CR>   
+
+
+
+" underline and make red misspelled words
+hi SpellBad cterm=underline ctermfg=196
+
+" do not highlight un-capitalized words
+hi clear SpellCap
