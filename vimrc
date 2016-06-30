@@ -712,7 +712,9 @@ noremap <F5>          :make!<CR>
 
 
 
+
 " underline and make red misspelled words
+hi clear SpellBad
 hi SpellBad cterm=underline ctermfg=196
 
 " do not highlight un-capitalized words
