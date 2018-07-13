@@ -57,8 +57,6 @@ call neobundle#append()
 NeoBundleCheck
 call neobundle#end()
 
-syntax on
-filetype on
 
 set novb t_vb=          " neither bell nor vbell
 set confirm             " ask for confirmation on overwrite, discard changes, etc
@@ -235,7 +233,8 @@ filetype on                     " enable filetype plugins
 filetype indent on
 filetype plugin on
 filetype plugin indent on
-syntax on                       " syntax highlighting on
+syntax on  " syntax highlighting on
+syntax spell toplevel
 
 "colorscheme slate
 
@@ -340,15 +339,17 @@ set pastetoggle=<F6>
 " F7 -- spellchecking
 map <F7> :setlocal spell! spelllang=en_us<CR> 
 
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Wrapping, yo
+" Wrapping
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maximum width of text that is being inserted.  A longer line will be 
 " broken after white space to get this width.  A zero value disables this. 
 set textwidth=72 
 " This is a sequence of letters which describes how automatic formatting is 
 " to be done.   See fo-table
-set formatoptions=cqt 
+set formatoptions=cqtonj
 set wrapmargin=0
 set wrap                  " wrap lines
 " make horizontal scrolling in wrap more useful
@@ -525,9 +526,7 @@ let g:syntastic_python_flake8_post_args="--ignore=E201,E202,E203,E221,E701,E241,
 " Language-specific settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd BufRead,BufNewFile *.textile set tw=0 spell spelllang=en_us
-autocmd BufRead,BufNewFile *.tex set spell spelllang=en_us ft=tex
-
-autocmd BufRead,BufNewFile *.tex set ft=tex spell spelllang=en_us
+autocmd BufRead,BufNewFile *.tex set spell spelllang=en_us ft=tex 
 
 au BufRead,BufNewFile /etc/nginx/conf/* set ft=nginx 
 
@@ -577,6 +576,17 @@ let g:ctrlp_prompt_mappings = {
   \ 'AcceptSelection("e")': [],
   \ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
   \ }
+
+let g:ctrlp_working_path_mode = 'ra'
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.tar.gz,*.pdf
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.git|venv)$',
+  \ 'file': '\v\.(exe|so|dll|pdf)$',
+  \ }
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
@@ -704,3 +714,5 @@ set clipboard=unnamed
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 0
+
+let g:tex_conceal=""
