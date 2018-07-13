@@ -47,10 +47,13 @@ NeoBundle 'evanmiller/nginx-vim-syntax'
 NeoBundle 'bling/vim-bufferline'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'Shougo/neocomplete'
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
+"NeoBundle 'Shougo/neosnippet'
+"NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'vim-latex/vim-latex'
+
+NeoBundle 'lervag/vimtex'
+NeoBundle 'rsmenon/vim-mathematica'
 
 
 " vim: set ft=vim:

@@ -200,32 +200,6 @@ endif
 "
 "
 
-" neocomplete snippets
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
-
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
-
-" Enable snipMate compatibility feature.
-let g:neosnippet#enable_snipmate_compatibility = 1
-
-" Tell Neosnippet about the other snippets
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Fonts, colors and syntax highlighting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -526,10 +500,14 @@ let g:syntastic_python_flake8_post_args="--ignore=E201,E202,E203,E221,E701,E241,
 " Language-specific settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd BufRead,BufNewFile *.textile set tw=0 spell spelllang=en_us
+<<<<<<< HEAD
 autocmd BufRead,BufNewFile *.tex set spell spelllang=en_us ft=tex 
+=======
+autocmd BufRead,BufNewFile *.tex set spell spelllang=en_us ft=tex
+let g:tex_flavor = "latex"
+>>>>>>> 770c7bfc673328aa5d9853b3c9a048f4084a8866
 
 au BufRead,BufNewFile /etc/nginx/conf/* set ft=nginx 
-
 au FileType html,xml so ~/.vim/bundle/xml.vim/ftplugin/xml.vim
 
 """ make ctrl+pg{up,dn} work in console vim
@@ -715,4 +693,28 @@ set clipboard=unnamed
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 0
 
+<<<<<<< HEAD
 let g:tex_conceal=""
+=======
+
+
+" wrap bulleted text ( '*' or '-')
+set comments=fb:-,fb:*
+
+noremap <F5>          :make!<CR>   
+
+
+
+
+" underline and make red misspelled words
+hi clear SpellBad
+hi SpellBad cterm=underline ctermfg=196
+
+" do not highlight un-capitalized words
+hi clear SpellCap
+
+
+" open file under cursor in tab, instead of buffer
+nnoremap gf <C-W>gf
+vnoremap gf <C-W>gf
+>>>>>>> 770c7bfc673328aa5d9853b3c9a048f4084a8866
