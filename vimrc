@@ -500,12 +500,8 @@ let g:syntastic_python_flake8_post_args="--ignore=E201,E202,E203,E221,E701,E241,
 " Language-specific settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd BufRead,BufNewFile *.textile set tw=0 spell spelllang=en_us
-<<<<<<< HEAD
 autocmd BufRead,BufNewFile *.tex set spell spelllang=en_us ft=tex 
-=======
-autocmd BufRead,BufNewFile *.tex set spell spelllang=en_us ft=tex
 let g:tex_flavor = "latex"
->>>>>>> 770c7bfc673328aa5d9853b3c9a048f4084a8866
 
 au BufRead,BufNewFile /etc/nginx/conf/* set ft=nginx 
 au FileType html,xml so ~/.vim/bundle/xml.vim/ftplugin/xml.vim
@@ -693,7 +689,6 @@ set clipboard=unnamed
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 0
 
-<<<<<<< HEAD
 let g:tex_conceal=""
 =======
 
@@ -717,4 +712,3 @@ hi clear SpellCap
 " open file under cursor in tab, instead of buffer
 nnoremap gf <C-W>gf
 vnoremap gf <C-W>gf
->>>>>>> 770c7bfc673328aa5d9853b3c9a048f4084a8866
