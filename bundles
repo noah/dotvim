@@ -51,8 +51,7 @@ NeoBundle 'Shougo/neocomplete'
 "NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'vim-latex/vim-latex'
-
-NeoBundle 'lervag/vimtex'
+"NeoBundle 'lervag/vimtex'
 NeoBundle 'rsmenon/vim-mathematica'
 
 

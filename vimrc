@@ -695,7 +695,7 @@ let g:tex_conceal=""
 " wrap bulleted text ( '*' or '-')
 set comments=fb:-,fb:*
 
-noremap <F5>          :make!<CR>   
+nnoremap <F5>          :make!<CR>   
 
 
 
@@ -711,3 +711,13 @@ hi clear SpellCap
 " open file under cursor in tab, instead of buffer
 nnoremap gf <C-W>gf
 vnoremap gf <C-W>gf
+
+
+let Tex_FoldedSections=""
+let Tex_FoldedEnvironments=""
+let Tex_FoldedMisc=""
+
+
+" infinite persistent undo
+set undofile
+set undodir=~/.vim/undodir
